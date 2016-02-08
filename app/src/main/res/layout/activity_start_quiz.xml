@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ This file is part of UCLan-THC server.
+  ~
+  ~     UCLan-THC server is free software: you can redistribute it and/or
+  ~     modify it under the terms of the GNU General Public License as
+  ~     published by the Free Software Foundation, either version 3 of
+  ~     the License, or (at your option) any later version.
+  ~
+  ~     UCLan-THC server is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:background="@drawable/app_background"
+            android:padding="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <ImageView
+                    android:id="@+id/activity_start_quiz_imageview_pirate"
+                    android:src="@drawable/pirate_android_smaller"
+                    android:contentDescription="@string/Android_pirate"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:id="@+id/activity_start_quiz_text_view_bubble"
+                    android:textSize="@dimen/text_size"
+                    android:background="@drawable/popup_inline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:background="@color/semitransparent_white"
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:text="@string/Team_name"
+                    android:textSize="@dimen/text_size"
+                    android:textStyle="bold"
+                    android:textColor="@color/pirate_red"
+                    android:padding="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            <EditText
+                    android:id="@+id/activity_start_quiz_team_name"
+                    android:inputType="text"
+                    android:layout_margin="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:text="@string/First_pirate"
+                    android:textSize="@dimen/text_size"
+                    android:textStyle="bold"
+                    android:textColor="@color/pirate_red"
+                    android:padding="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                    android:padding="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                        android:text="@string/Name"
+                        android:textSize="@dimen/text_size"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"/>
+
+                <EditText
+                        android:id="@+id/activity_start_quiz_pirate1_name"
+                        android:inputType="text"
+                        android:layout_marginLeft="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:padding="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                        android:text="@string/Email"
+                        android:textSize="@dimen/text_size"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"/>
+
+                <EditText
+                        android:id="@+id/activity_start_quiz_pirate1_email"
+                        android:inputType="textEmailAddress"
+                        android:layout_marginLeft="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <Button
+                    android:id="@+id/activity_start_quiz_button_add_second_pirate"
+                    android:text="@string/Add_second_pirate"
+                    android:layout_marginTop="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                    android:id="@+id/activity_start_quiz_second_pirate_container"
+                    android:visibility="gone"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                        android:text="@string/Second_pirate"
+                        android:textSize="@dimen/text_size"
+                        android:textStyle="bold"
+                        android:textColor="@color/pirate_red"
+                        android:padding="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                        android:padding="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:text="@string/Name"
+                            android:textSize="@dimen/text_size"
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"/>
+
+                    <EditText
+                            android:id="@+id/activity_start_quiz_pirate2_name"
+                            android:inputType="text"
+                            android:layout_marginLeft="16dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                        android:padding="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:text="@string/Email"
+                            android:textSize="@dimen/text_size"
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"/>
+
+                    <EditText
+                            android:id="@+id/activity_start_quiz_pirate2_email"
+                            android:inputType="textEmailAddress"
+                            android:layout_marginLeft="16dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <Button
+                        android:id="@+id/activity_start_quiz_button_remove_second_pirate"
+                        android:text="@string/Remove_second_pirate"
+                        android:layout_marginTop="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Button
+                android:id="@+id/activity_start_quiz_button_start"
+                android:text="@string/Find_the_Treasure"
+                android:drawableRight="@drawable/ic_media_embed_play"
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_start_height"/>
+
+    </LinearLayout>
+
+</ScrollView>

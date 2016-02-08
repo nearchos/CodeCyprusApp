@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:background="@drawable/app_background"
+                android:padding="16dp"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+    <Button
+            android:id="@+id/activity_home_button_start"
+            android:text="@string/Lets_get_started"
+            android:textStyle="bold"
+            android:drawableRight="@drawable/ic_media_embed_play"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_start_height"/>
+
+    <ImageView
+            android:id="@+id/activity_home_imageview_pirate"
+            android:src="@drawable/pirate_android_small"
+            android:contentDescription="@string/Android_pirate"
+            android:layout_alignParentRight="true"
+            android:layout_margin="16dp"
+            android:layout_above="@id/activity_home_button_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:text="@string/Ahoy"
+            android:textSize="@dimen/text_size"
+            android:background="@drawable/popup_inline_error_above_am"
+            android:layout_above="@id/activity_home_imageview_pirate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+</RelativeLayout>

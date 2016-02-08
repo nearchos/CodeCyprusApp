@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ This file is part of UCLan-THC server.
+  ~
+  ~     UCLan-THC server is free software: you can redistribute it and/or
+  ~     modify it under the terms of the GNU General Public License as
+  ~     published by the Free Software Foundation, either version 3 of
+  ~     the License, or (at your option) any later version.
+  ~
+  ~     UCLan-THC server is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+
+    <!--about dialog-->
+    <string name="about_aspectsense">Αναπτύχθηκε από\nAspectSense.com © 2011–2014</string>
+    <string name="Rate_us">Βαθμολογήστε μας</string>
+    <string name="Dismiss">Κλείσιμο</string>
+    <string name="AspectSense_icon">Εικονίδιο AspectSense</string>
+
+    <!--resume or clear dialog-->
+    <string name="Resume_or_clear_message">Υπάρχει ήδη κάποιο αποθηκευμένο παιχνίδι: \'%1$s\'.\n\nΘέλετε να το επαναφέρετε ή να ξεκινήσετε καινούριο;</string>
+    <string name="Resume">Επαναφορά</string>
+    <string name="Start_new">Καινούριο</string>
+    <string name="Cancel">Άκυρο</string>
+
+    <!--skip dialog-->
+    <string name="Skip_question">Παράληψη ερώτησης;</string>
+    <string name="Are_you_sure_you_want_to_skip_the_current_question">Είστε σίγουροι ότι θέλετε να προσπεράσετε την ερώτηση;</string>
+
+    <string name="Ahoy">Αχόι πειρατές! Και καλωσορίσατε στο Κυνήγι Θησαυρού του Code Cyprus!\n\nΑν έχετε ερωτήσεις, επιλέξτε το μενού \'Βοήθεια\'. Όταν είστε έτοιμοι, πατήστε το πιο κάτω κουμπί για να ξεκινήσετε!</string>
+    <string name="Start">Ξεκινήστε</string>
+    <string name="Lets_get_started">Ας ξεκινήσουμε!</string>
+    <string name="Android_pirate">Android πειρατής</string>
+    <string name="Select_a_category">Επιλέξτε κατηγορία</string>
+    <string name="Enter_code_to_view_hidden_contests">Εισάγετε κωδικό για να δείτε κρυμμένους διαγωνισμούς</string>
+    <string name="Submit">Υποβολή</string>
+
+    <string name="Training">Μάθηση</string>
+    <string name="Please_wait">Παρακαλώ περιμένετε…</string>
+    <string name="Floor">Όροφος</string>
+    <string name="Select_location">Επιλέξτε τοποθεσία</string>
+    <string name="Select_floor">Επιλέξτε όροφο</string>
+    <string name="Select_account">Επιλέξτε λογαριασμό</string>
+    <string name="You_must_activate_the_WiFi_first">Πρέπει να ενεργοποιήσετε το WiFi πρώτα</string>
+    <string name="Indoors_location">Εσωτερική τοποθεσία</string>
+    <string name="Scan">Αναζήτηση</string>
+    <string name="Settings">Ρυθμίσεις</string>
+    <string name="Show_training_points">Εμφάνιση σημείων μάθησης</string>
+
+    <string name="ACTIVE">ΕΝΕΡΓΟ</string>
+    <string name="ACTIVE_SESSION">ΑΠΟΘΗΚΕΥΜΕΝΟ</string>
+
+    <string name="REFRESH">ΑΝΑΝΕΩΣΗ</string>
+    <string name="ENTER_CODE">Εισάγετε κωδικό</string>
+    <string name="First_select_a_treasure_hunt_to_join">Πρώτα επιλέξτε ένα θησαυρό για να κυνηγήσετε!</string>
+    <string name="Valid_until">Έγκυρο μέχρι: %1$s</string>
+    <string name="Valid_from_until">Έγκυρο από: %1$s μέχρι: %2$s</string>
+    <string name="Going_live_in">Ξεκινά σέ: %1$s</string>
+    <string name="Ends_in">Τερματίζει σέ: %1$s</string>
+    <string name="just_now">τώρα</string>
+    <string name="seconds">%1$s δευτερόλεπτα</string>
+    <string name="minutes">%1$s λεπτά</string>
+    <string name="hours">%1$s ώρες</string>
+    <string name="days">%1$s μέρες</string>
+    <string name="weeks">%1$s εβδομάδες</string>
+    <string name="Finished_ago">Τερμάτισε πριν: %1$s</string>
+
+    <string name="Find_the_Treasure">Βρείτε το θησαυρό!</string>
+    <string name="Team_names_and_emails">Αχόι, ψάχνουμε για το θησαυρό \'%1$s\'. Απλά δώστε μας τα ονόματα και τα emails της ομάδας σας και φύγαμε!</string>
+    <string name="Add_second_pirate">Προσθέστε δεύτερο πειρατή</string>
+    <string name="Remove_second_pirate">Αφαιρέστε δεύτερο πειρατή</string>
+    <string name="Team_name">Όνομα ομάδας</string>
+    <string name="First_pirate">Πρώτος πειρατής</string>
+    <string name="Second_pirate">Δεύτερος πειρατής</string>
+    <string name="Name">Όνομα</string>
+    <string name="Empty_name">Άδειο όνομα</string>
+    <string name="Empty_email">Άδειο email</string>
+    <string name="Invalid_email">Άκυρο email</string>
+
+    <string name="Answer_here">Απαντήστε εδώ …</string>
+    <string name="Score_is">Το σκορ είναι: %1$d </string>
+    <string name="Score">Σκορ: %1$d </string>
+    <string name="SKIP">ΠΡΟΣΠΕΡΑΣΤΕ</string>
+    <string name="Skip">Προσπεράστε</string>
+    <string name="Skipped_has_more_questions">Προσπεραστηκε, υπάρχουν άλλες ερωτήσεις…</string>
+    <string name="Skipped_finished">Προσπεραστηκε, τέλευταία ερώτηση!</string>
+    <string name="Loading">Φόρτωση …</string>
+    <string name="Requires_location">Απαιτείται τοποθεσία!</string>
+    <string name="A">A</string>
+    <string name="B">B</string>
+    <string name="C">C</string>
+    <string name="D">D</string>
+    <string name="Invalid_session">Σφάλμα αποθηκευμένου παιχνιδιού!</string>
+    <string name="Invalid_empty_answer">Λάθος άδεια απάντηση</string>
+    <string name="Incorrect">Λάθος</string>
+    <string name="Unknown_or_incorrect_location">Άγνωστη ή λανθασμένη τοποθεσία</string>
+    <string name="Correct">Σωστό!</string>
+    <string name="Correct_finished">Σωστό, τερμάτισες!</string>
+
+    <string name="Website">Website</string>
+    <string name="HELP">ΒΟΗΘΕΙΑ</string>
+    <string name="Help">Βοήθεια</string>
+    <string name="ABOUT">ΣΧΕΤΙΚΑ</string>
+    <string name="About">Σχετικά</string>
+    <string name="Error">Σφάλμα</string>
+    <string name="Resume_or_clear">Επαναφορά ή καθαρισμός?</string>
+    <string name="about_p1">Ευχαριστούμε για τη συμμετοχή σας στο Code Cyprus, ένα μη κερδοσκοπικό γεγονός που στοχεύει στο να εμπνεύσει το ενδιαφέρον μαθητών γυμνασίων και λυκείων στον προγραμματισμό, στην Κύπρο και αλλού.</string>
+    <string name="about_p2">Μάθετε περισσότερες πληροφορίες στο:</string>
+    <string name="about_p3">Αυτή η εφαρμογή Android χρησιμοποιείται για το Κυνήγι Θησαυρού. Ο κώδικας αναπτύχθηκε από την aspectsense.com που τον έχει διαθέσει επίσης σαν ανοικτό κώδικα με άδεια LGPL στο ακόλουθο URL:</string>
+
+    <string name="Score_board">Πίνακας βαθμολογίας</string>
+    <string name="Location">Τοποθεσία</string>
+    <string name="Finished_in">Τερματίσατε σε: %1$s</string>
+    <string name="Not_finished_yet">Ακόμη να τερματίσει</string>
+    <string name="OK">ΟΚ</string>
+
+</resources>
