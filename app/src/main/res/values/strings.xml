@@ -20,9 +20,8 @@
 
 <resources>
 
-    <string name="app_name">Code Cyprus</string>
-    <string name="version_name">1.5.0</string>
-    <string name="build_date">(2016–02–08)</string>
+    <string translatable="false" name="app_name">Code Cyprus</string>
+    <string translatable="false" name="version_name">1.5.0</string>
 
     <!--about dialog-->
     <string name="about_aspectsense">Developed by\nAspectSense.com © 2011–2016</string>
@@ -40,8 +39,8 @@
     <string name="Skip_question">Skip question?</string>
     <string name="Are_you_sure_you_want_to_skip_the_current_question">Are you sure you want to skip the current question?</string>
 
-    <string name="codecyprus_dot_org_url">http://codecyprus.org</string>
-    <string name="aspectsense_dot_com_url">http://aspectsense.com</string>
+    <string translatable="false" name="codecyprus_dot_org_url">http://codecyprus.org</string>
+    <string translatable="false" name="aspectsense_dot_com_url">http://aspectsense.com</string>
 
     <string name="Ahoy">Ahoy pirates! And welcome to the Code Cyprus\' Treasure Hunt!\n\nIf you have questions, select the \'Help\' menu. When you are ready, click the button below to get started!</string>    <string name="Start">Start</string>
     <string name="Lets_get_started">Let\'s get started!</string>
@@ -90,7 +89,7 @@
     <string name="First_pirate">First pirate</string>
     <string name="Second_pirate">Second pirate</string>
     <string name="Name">Name</string>
-    <string name="Email">Email</string>
+    <string translatable="false" name="Email">Email</string>
     <string name="Empty_name">Empty name</string>
     <string name="Empty_email">Empty email</string>
     <string name="Invalid_email">Invalid email</string>
@@ -131,5 +130,6 @@
     <string name="Finished_in">Finished in: %1$s</string>
     <string name="Not_finished_yet">Not finished yet</string>
     <string name="ENTER_CODE">Enter code</string>
+    <string translatable="false" name="placeholder">placeholder</string>
 
 </resources>

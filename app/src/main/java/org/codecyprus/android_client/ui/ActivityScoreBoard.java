@@ -42,7 +42,8 @@ import java.util.HashMap;
 import java.util.Vector;
 
 /**
- * Created by Nearchos Paspallis on 31/12/13 / 08:53.
+ * @author Nearchos Paspallis
+ * 31/12/13 / 08:53.
  */
 public class ActivityScoreBoard extends Activity
 {

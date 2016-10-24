@@ -122,5 +122,7 @@
     <string name="Finished_in">Τερματίσατε σε: %1$s</string>
     <string name="Not_finished_yet">Ακόμη να τερματίσει</string>
     <string name="OK">ΟΚ</string>
+    <string name="Refresh">Ανανέωση</string>
+    <string name="Enter_code">Εισάγετε κωδικό</string>
 
 </resources>

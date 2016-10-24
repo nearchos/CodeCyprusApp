@@ -55,6 +55,7 @@
                 android:textColor="@color/pirate_green"
                 android:textStyle="bold"
                 android:layout_toLeftOf="@id/list_item_category_play_button"
+                android:layout_toStartOf="@id/list_item_category_play_button"
                 android:layout_below="@id/list_item_category_name"
                 android:layout_marginTop="4dp"
                 android:layout_width="match_parent"
@@ -62,10 +63,10 @@
 
         <TextView
                 android:id="@+id/list_item_category_valid_date_and_time"
-                android:text="@string/build_date"
+                android:text="@string/placeholder"
                 android:textSize="@dimen/text_small_size"
                 android:textColor="@color/dark_gray"
-                android:gravity="left"
+                android:gravity="start"
                 android:layout_below="@id/list_item_category_active"
                 android:layout_marginTop="4dp"
                 android:layout_width="match_parent"

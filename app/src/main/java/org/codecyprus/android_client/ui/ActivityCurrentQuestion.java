@@ -162,7 +162,7 @@ public class ActivityCurrentQuestion extends Activity
             {
                 final CharSequence charSequence = textAnswerEditText.getText();
                 final String answer = charSequence == null ? "" : charSequence.toString();
-                if(answer == null || answer.isEmpty())
+                if(answer.isEmpty())
                 {
                     Toast.makeText(ActivityCurrentQuestion.this, R.string.Invalid_empty_answer, Toast.LENGTH_SHORT).show();
                 }
@@ -177,7 +177,7 @@ public class ActivityCurrentQuestion extends Activity
         progressReceiver = new ProgressReceiver();
     }
 
-    private MenuItem locationMenuItem = null;
+//    private MenuItem locationMenuItem = null; todo delete?
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -232,7 +232,7 @@ public class ActivityCurrentQuestion extends Activity
     {
         final Intent skipQuestionIntent = new Intent(this, SyncService.class);
         skipQuestionIntent.setAction(SyncService.ACTION_SKIP_QUESTION);
-        final HashMap<String,String> parameters = new HashMap<String, String>();
+        final HashMap<String,String> parameters = new HashMap<>();
         parameters.put("session", sessionUUID);
         skipQuestionIntent.putExtra(SyncService.EXTRA_PARAMETERS, parameters);
         setProgressBarIndeterminateVisibility(true);
@@ -240,7 +240,7 @@ public class ActivityCurrentQuestion extends Activity
     }
 
     private String sessionUUID = null;
-    private String locationUUID = null;
+//    private String locationUUID = null;
 
     @Override
     protected void onResume()
@@ -264,7 +264,7 @@ public class ActivityCurrentQuestion extends Activity
             sessionUUID = serializableSession.getSessionUUID();
             requestCurrentQuestion();
 
-            locationUUID = serializableSession.getLocationUUID();
+//            locationUUID = serializableSession.getLocationUUID();
             // request normal (i.e. android-based) location updates
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30000, 0, locationUpdater);
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 30000, 0, locationUpdater);
@@ -284,8 +284,9 @@ public class ActivityCurrentQuestion extends Activity
     {
         final Intent currentQuestionIntent = new Intent(this, SyncService.class);
         currentQuestionIntent.setAction(SyncService.ACTION_CURRENT_QUESTION);
-        final HashMap<String,String> parameters = new HashMap<String, String>();
+        final HashMap<String,String> parameters = new HashMap<>();
         parameters.put("session", sessionUUID);
+        // todo add code
         currentQuestionIntent.putExtra(SyncService.EXTRA_PARAMETERS, parameters);
         setProgressBarIndeterminateVisibility(true);
         startService(currentQuestionIntent);
@@ -297,7 +298,7 @@ public class ActivityCurrentQuestion extends Activity
     {
         final Intent scoreIntent = new Intent(this, SyncService.class);
         scoreIntent.setAction(SyncService.ACTION_SCORE);
-        final HashMap<String,String> parameters = new HashMap<String, String>();
+        final HashMap<String,String> parameters = new HashMap<>();
         parameters.put("session", sessionUUID);
         scoreIntent.putExtra(SyncService.EXTRA_PARAMETERS, parameters);
         setProgressBarIndeterminateVisibility(true);
@@ -320,7 +321,7 @@ public class ActivityCurrentQuestion extends Activity
 
         final Intent answerQuestionIntent = new Intent(this, SyncService.class);
         answerQuestionIntent.setAction(SyncService.ACTION_ANSWER_QUESTION);
-        final HashMap<String,String> parameters = new HashMap<String, String>();
+        final HashMap<String,String> parameters = new HashMap<>();
         parameters.put("session", sessionUUID);
         parameters.put("answer", answer.trim());
         answerQuestionIntent.putExtra(SyncService.EXTRA_PARAMETERS, parameters);
@@ -337,6 +338,7 @@ public class ActivityCurrentQuestion extends Activity
 
             if(payload != null)
             {
+                Log.d(TAG, "intent.getAction() -> " + intent.getAction());
                 try
                 {
                     if(SyncService.ACTION_CURRENT_QUESTION_COMPLETED.equals(intent.getAction()))
@@ -435,6 +437,7 @@ public class ActivityCurrentQuestion extends Activity
         buttonD.setEnabled(true);
         buttonSubmit.setEnabled(true);
 
+        assert question != null;
         String questionText = question.getQuestion();
         if(questionText.startsWith("MCQ:"))
         {
@@ -466,7 +469,7 @@ public class ActivityCurrentQuestion extends Activity
     {
         final Intent updateLocationIntent = new Intent(ActivityCurrentQuestion.this, SyncService.class);
         updateLocationIntent.setAction(SyncService.ACTION_UPDATE_LOCATION);
-        final HashMap<String,String> parameters = new HashMap<String, String>();
+        final HashMap<String,String> parameters = new HashMap<>();
         parameters.put("session", sessionUUID);
         parameters.put("lat", Double.toString(lat));
         parameters.put("lng", Double.toString(lng));

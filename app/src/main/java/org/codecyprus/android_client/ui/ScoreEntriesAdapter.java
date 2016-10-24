@@ -99,7 +99,7 @@ public class ScoreEntriesAdapter extends ArrayAdapter<ScoreEntry>
         else if(duration < HOUR)
         {
             long ms = duration % SECOND;
-            long s = duration / SECOND;
+            long s = duration / MINUTE;
             return duration / MINUTE + "m:"
                     + (s < 10 ? "0" : "") + s + "s:"
                     + (ms < 100 ? "0" : "") + (ms < 10 ? "0" : "") + ms + "ms";
@@ -113,6 +113,13 @@ public class ScoreEntriesAdapter extends ArrayAdapter<ScoreEntry>
                     + (m < 10 ? "0" : "") + m + "m:"
                     + (s < 10 ? "0" : "") + s + "s:"
                     + (ms < 100 ? "0" : "") + (ms < 10 ? "0" : "") + ms + "ms";
+        }
+    }
+
+    public static void main(String[] args) {
+        final long [] times = { 100123L, 1100123L, 6100123, 3600123, 3660123, 3661123, 3662123 };
+        for(final long t : times) {
+            System.out.println("timeInText(" + t + " --timeInText-->" + timeInText(t));
         }
     }
 }
