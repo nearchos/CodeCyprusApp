@@ -31,20 +31,20 @@ public class Question implements Serializable
     private final String question;
     private final boolean isLocationRelevant;
 
-    public Question(final String question,
-                    final boolean isLocationRelevant)
-    {
+    public Question(final String question, final boolean isLocationRelevant) {
         this.question = question;
         this.isLocationRelevant = isLocationRelevant;
     }
 
-    public String getQuestion()
-    {
+    public String getQuestion() {
         return question;
     }
 
-    public boolean isLocationRelevant()
-    {
+    public boolean isLocationRelevant() {
         return isLocationRelevant;
+    }
+
+    public boolean isMCQ() {
+        return question.startsWith("MCQ:");
     }
 }

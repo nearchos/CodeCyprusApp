@@ -31,17 +31,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <!--<TextView-->
-                <!--android:id="@+id/activity_current_question_score"-->
-                <!--android:text="Score: ..."-->
-                <!--android:textSize="@dimen/text_size"-->
-                <!--android:textColor="@color/green"-->
-                <!--android:gravity="right"-->
-                <!--android:paddingRight="8dp"-->
-                <!--android:layout_marginBottom="8dp"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"/>-->
-
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -83,7 +72,7 @@
 
         <TextView
                 android:id="@+id/activity_current_question_feedback"
-                android:text="Feedback"
+                android:text="@string/Feedback"
                 android:textColor="@color/red"
                 android:textSize="@dimen/text_size"
                 android:padding="8dp"
@@ -143,6 +132,7 @@
                     android:id="@+id/activity_current_question_button_submit"
                     android:text="@string/Submit"
                     android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/button_start_height"/>
 
@@ -150,11 +140,13 @@
                     android:id="@+id/activity_current_question_edit_text"
                     android:textSize="@dimen/text_size"
                     android:hint="@string/Answer_here"
-                    android:singleLine="true"
+                    android:maxLines="1"
                     android:layout_marginBottom="8dp"
                     android:layout_centerVertical="true"
                     android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:layout_toLeftOf="@id/activity_current_question_button_submit"
+                    android:layout_toStartOf="@id/activity_current_question_button_submit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 

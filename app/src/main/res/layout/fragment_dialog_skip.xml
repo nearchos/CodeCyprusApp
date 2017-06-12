@@ -25,7 +25,8 @@
             android:layout_height="match_parent">
 
         <TextView
-                android:text="@string/Are_you_sure_you_want_to_skip_the_current_question"
+                android:id="@+id/confirm_mcq_text_view"
+                android:text="@string/Are_you_sure_you_want_to_submit_for_the_current_question"
                 android:textSize="@dimen/text_size"
                 android:layout_margin="16dp"
                 android:layout_height="wrap_content"

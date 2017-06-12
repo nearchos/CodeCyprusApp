@@ -34,10 +34,15 @@
     <string name="Resume">Resume</string>
     <string name="Start_new">Start new</string>
     <string name="Cancel">Cancel</string>
+    <string name="Cancelled">Cancelled</string>
 
     <!--skip dialog-->
     <string name="Skip_question">Skip question?</string>
     <string name="Are_you_sure_you_want_to_skip_the_current_question">Are you sure you want to skip the current question?</string>
+
+    <!--confirm MCQ dialog-->
+    <string name="Confirm_MCQ">Please confirm your answer</string>
+    <string name="Are_you_sure_you_want_to_submit_for_the_current_question">Are you sure you want to submit \'%1$s\' for the current question?</string>
 
     <string translatable="false" name="codecyprus_dot_org_url">http://codecyprus.org</string>
     <string translatable="false" name="aspectsense_dot_com_url">http://aspectsense.com</string>
@@ -132,4 +137,6 @@
     <string name="ENTER_CODE">Enter code</string>
     <string translatable="false" name="placeholder">placeholder</string>
 
+    <string translatable="false" name="Feedback">Feedback</string>
+    <string name="Scan_a_QR_code">Scan a QR code</string>
 </resources>

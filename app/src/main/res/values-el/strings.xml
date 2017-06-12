@@ -31,10 +31,15 @@
     <string name="Resume">Επαναφορά</string>
     <string name="Start_new">Καινούριο</string>
     <string name="Cancel">Άκυρο</string>
+    <string name="Cancelled">Ακυρώθηκε</string>
 
     <!--skip dialog-->
     <string name="Skip_question">Παράληψη ερώτησης;</string>
     <string name="Are_you_sure_you_want_to_skip_the_current_question">Είστε σίγουροι ότι θέλετε να προσπεράσετε την ερώτηση;</string>
+
+    <!--confirm MCQ dialog-->
+    <string name="Confirm_MCQ">Παρακαλώ επιβεβαιώστε την απάντηση σας</string>
+    <string name="Are_you_sure_you_want_to_submit_for_the_current_question">Είστε σίγουροι ότι θέλετε να υποβάλετε \'%1$s\' για την τρέχων ερώτηση;</string>
 
     <string name="Ahoy">Αχόι πειρατές! Και καλωσορίσατε στο Κυνήγι Θησαυρού του Code Cyprus!\n\nΑν έχετε ερωτήσεις, επιλέξτε το μενού \'Βοήθεια\'. Όταν είστε έτοιμοι, πατήστε το πιο κάτω κουμπί για να ξεκινήσετε!</string>
     <string name="Start">Ξεκινήστε</string>
@@ -124,5 +129,7 @@
     <string name="OK">ΟΚ</string>
     <string name="Refresh">Ανανέωση</string>
     <string name="Enter_code">Εισάγετε κωδικό</string>
+
+    <string name="Scan_a_QR_code">Σαρώστε ένα QR κώδικα</string>
 
 </resources>

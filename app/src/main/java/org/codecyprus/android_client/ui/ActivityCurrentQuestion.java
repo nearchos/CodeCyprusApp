@@ -37,6 +37,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
 import org.codecyprus.android_client.Preferences;
 import org.codecyprus.android_client.R;
 import org.codecyprus.android_client.SerializableSession;
@@ -77,7 +81,6 @@ public class ActivityCurrentQuestion extends Activity
     private Button buttonD;
     private Button buttonSubmit;
 
-//    private TextView scoreTextView;
     private TextView feedbackTextView;
     private TextView questionTextView;
     private TextView requiresLocationTextView;
@@ -177,13 +180,15 @@ public class ActivityCurrentQuestion extends Activity
         progressReceiver = new ProgressReceiver();
     }
 
-//    private MenuItem locationMenuItem = null; todo delete?
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
         menu.add(R.string.SKIP)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+
+        menu.add(R.string.Scan)
+                .setIcon(R.drawable.ic_qrcode_black_48dp)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
         menu.add(R.string.Score_board)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
@@ -217,6 +222,15 @@ public class ActivityCurrentQuestion extends Activity
 
             return true;
         }
+        else if(getString(R.string.Scan).equals(item.getTitle()))
+        {
+            final IntentIntegrator intentIntegrator = new IntentIntegrator(this);
+            intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+            intentIntegrator.setPrompt(getString(R.string.Scan_a_QR_code));
+            intentIntegrator.setBeepEnabled(true);
+            intentIntegrator.initiateScan();
+            return true;
+        }
         else if(getString(R.string.Score_board).equals(item.getTitle()))
         {
             showScoreBoard();
@@ -225,6 +239,47 @@ public class ActivityCurrentQuestion extends Activity
         else
         {
             return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        final IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if(intentResult != null) {
+            if(intentResult.getContents() == null) {
+                Log.d("ActivityCurrentQuestion", "Cancelled scan");
+                Toast.makeText(this, R.string.Cancelled, Toast.LENGTH_LONG).show();
+            } else {
+                Log.d("ActivityCurrentQuestion", "Scanned");
+                final String scannedText = intentResult.getContents();
+                if(question.isMCQ()) {
+                    if("A".equalsIgnoreCase(scannedText) ||
+                            "B".equalsIgnoreCase(scannedText) ||
+                            "C".equalsIgnoreCase(scannedText) ||
+                            "D".equalsIgnoreCase(scannedText)) {
+                        // todo show dialog?
+                        final DialogConfirmMCQ dialogConfirmMCQ = new DialogConfirmMCQ(this, scannedText);
+                        dialogConfirmMCQ.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @Override public void onDismiss(DialogInterface dialog) {
+                                if(dialogConfirmMCQ.isSubmit()) {
+                                    submitAnswer(scannedText);
+                                }
+                            }
+                        });
+                        dialogConfirmMCQ.show();
+                    } else {
+                        Toast.makeText(this, "Scanned: " + intentResult.getContents(), Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    textAnswerEditText.setText(scannedText);
+                    textAnswerEditText.selectAll();
+                    textAnswerEditText.requestFocus();
+                    inputMethodManager.showSoftInput(textAnswerEditText, 0);
+                }
+            }
+        } else {
+            // This is important, otherwise the result will not be passed to the fragment
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -286,7 +341,7 @@ public class ActivityCurrentQuestion extends Activity
         currentQuestionIntent.setAction(SyncService.ACTION_CURRENT_QUESTION);
         final HashMap<String,String> parameters = new HashMap<>();
         parameters.put("session", sessionUUID);
-        // todo add code
+        // todo add 'code'?
         currentQuestionIntent.putExtra(SyncService.EXTRA_PARAMETERS, parameters);
         setProgressBarIndeterminateVisibility(true);
         startService(currentQuestionIntent);
@@ -439,15 +494,12 @@ public class ActivityCurrentQuestion extends Activity
 
         assert question != null;
         String questionText = question.getQuestion();
-        if(questionText.startsWith("MCQ:"))
-        {
+        if(question.isMCQ()) {
             questionText = questionText.substring(4).trim();
             mcqButtonsContainer.setVisibility(View.VISIBLE);
             textButtonsContainer.setVisibility(View.GONE);
             inputMethodManager.hideSoftInputFromWindow(textAnswerEditText.getWindowToken(), 0);
-        }
-        else
-        {
+        } else {
             mcqButtonsContainer.setVisibility(View.GONE);
             textButtonsContainer.setVisibility(View.VISIBLE);
             textAnswerEditText.selectAll();
