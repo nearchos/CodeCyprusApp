@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016.
+ * Copyright (c) 2017.
  *
  * This file is part of the Code Cyprus App.
  *
@@ -23,13 +23,13 @@ android {
     signingConfigs {
     }
     compileSdkVersion 25
-    buildToolsVersion '25.0.2'
+    buildToolsVersion "25.0.3"
     defaultConfig {
         applicationId "org.codecyprus.android_client"
         minSdkVersion 14
         targetSdkVersion 19
-        versionCode 5
-        versionName "1.5.0-" + versionCode + " built on " + getDate()
+        versionCode 7
+        versionName "1.6.0-" + versionCode + " built on " + getDate()
     }
     buildTypes {
         release {
@@ -48,10 +48,14 @@ static def getDate() {
     return formattedDate
 }
 
+repositories {
+    jcenter()
+}
+
 dependencies {
+    compile 'com.journeyapps:zxing-android-embedded:3.0.2@aar'
+    compile 'com.google.zxing:core:3.2.0'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.journeyapps:zxing-android-embedded:3.0.2@aar'
-    compile 'com.google.zxing:core:3.2.0'
 }

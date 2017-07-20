@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016.
+ * Copyright (c) 2017.
  *
  * This file is part of the Code Cyprus App.
  *
@@ -26,6 +26,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
@@ -245,37 +246,39 @@ public class ActivityCurrentQuestion extends Activity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         final IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+
         if(intentResult != null) {
             if(intentResult.getContents() == null) {
-                Log.d("ActivityCurrentQuestion", "Cancelled scan");
                 Toast.makeText(this, R.string.Cancelled, Toast.LENGTH_LONG).show();
             } else {
-                Log.d("ActivityCurrentQuestion", "Scanned");
                 final String scannedText = intentResult.getContents();
-                if(question.isMCQ()) {
-                    if("A".equalsIgnoreCase(scannedText) ||
-                            "B".equalsIgnoreCase(scannedText) ||
-                            "C".equalsIgnoreCase(scannedText) ||
-                            "D".equalsIgnoreCase(scannedText)) {
-                        // todo show dialog?
-                        final DialogConfirmMCQ dialogConfirmMCQ = new DialogConfirmMCQ(this, scannedText);
-                        dialogConfirmMCQ.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                            @Override public void onDismiss(DialogInterface dialog) {
-                                if(dialogConfirmMCQ.isSubmit()) {
-                                    submitAnswer(scannedText);
-                                }
-                            }
-                        });
-                        dialogConfirmMCQ.show();
-                    } else {
-                        Toast.makeText(this, "Scanned: " + intentResult.getContents(), Toast.LENGTH_LONG).show();
-                    }
-                } else {
+                Toast.makeText(this, "Scanned: ;" + scannedText + "'", Toast.LENGTH_SHORT).show();
+                recoverSession();
+                requestCurrentQuestion();
+//                if(question.isMCQ()) {
+//                    if("A".equalsIgnoreCase(scannedText) ||
+//                            "B".equalsIgnoreCase(scannedText) ||
+//                            "C".equalsIgnoreCase(scannedText) ||
+//                            "D".equalsIgnoreCase(scannedText)) {
+//                        // todo show dialog?
+//                        final DialogConfirmMCQ dialogConfirmMCQ = new DialogConfirmMCQ(this, scannedText);
+//                        dialogConfirmMCQ.setOnDismissListener(new DialogInterface.OnDismissListener() {
+//                            @Override public void onDismiss(DialogInterface dialog) {
+//                                if(dialogConfirmMCQ.isSubmit()) {
+//                                    submitAnswer(scannedText);
+//                                }
+//                            }
+//                        });
+//                        dialogConfirmMCQ.show();
+//                    } else {
+//                        Toast.makeText(this, "Scanned: " + intentResult.getContents(), Toast.LENGTH_LONG).show();
+//                    }
+//                } else {
                     textAnswerEditText.setText(scannedText);
                     textAnswerEditText.selectAll();
                     textAnswerEditText.requestFocus();
                     inputMethodManager.showSoftInput(textAnswerEditText, 0);
-                }
+//                }
             }
         } else {
             // This is important, otherwise the result will not be passed to the fragment
@@ -296,18 +299,22 @@ public class ActivityCurrentQuestion extends Activity
 
     private String sessionUUID = null;
 //    private String locationUUID = null;
+    private String code = "";
 
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
         registerReceiver(progressReceiver, intentFilter);
 
-        if(actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
+        if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
 
         mcqButtonsContainer.setVisibility(View.GONE);
         textButtonsContainer.setVisibility(View.GONE);
 
+        recoverSession();
+    }
+
+    private void recoverSession() {
         final SerializableSession serializableSession = Preferences.getActiveSession(this);
         if(serializableSession == null)
         {
@@ -324,6 +331,8 @@ public class ActivityCurrentQuestion extends Activity
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30000, 0, locationUpdater);
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 30000, 0, locationUpdater);
         }
+
+        code = PreferenceManager.getDefaultSharedPreferences(this).getString("code", "");
     }
 
     @Override
@@ -341,6 +350,7 @@ public class ActivityCurrentQuestion extends Activity
         currentQuestionIntent.setAction(SyncService.ACTION_CURRENT_QUESTION);
         final HashMap<String,String> parameters = new HashMap<>();
         parameters.put("session", sessionUUID);
+        parameters.put("code", code);
         // todo add 'code'?
         currentQuestionIntent.putExtra(SyncService.EXTRA_PARAMETERS, parameters);
         setProgressBarIndeterminateVisibility(true);
@@ -378,6 +388,7 @@ public class ActivityCurrentQuestion extends Activity
         answerQuestionIntent.setAction(SyncService.ACTION_ANSWER_QUESTION);
         final HashMap<String,String> parameters = new HashMap<>();
         parameters.put("session", sessionUUID);
+        if(code != null && code.length() > 0) parameters.put("code", code);
         parameters.put("answer", answer.trim());
         answerQuestionIntent.putExtra(SyncService.EXTRA_PARAMETERS, parameters);
         setProgressBarIndeterminateVisibility(true);
@@ -422,6 +433,7 @@ public class ActivityCurrentQuestion extends Activity
                         {
                             feedbackTextView.setTextColor(getResources().getColor(R.color.green));
                             feedbackTextView.setText(getString(R.string.Correct));
+                            textAnswerEditText.clearComposingText();
                             Toast.makeText(context, R.string.Correct, Toast.LENGTH_SHORT).show();
                             requestCurrentQuestion();
                         }
@@ -429,6 +441,7 @@ public class ActivityCurrentQuestion extends Activity
                         {
                             feedbackTextView.setTextColor(getResources().getColor(R.color.green));
                             feedbackTextView.setText(getString(R.string.Correct_finished));
+                            textAnswerEditText.clearComposingText();
                             Toast.makeText(context, R.string.Correct_finished, Toast.LENGTH_SHORT).show();
                             // remove from saved sessions in prefs
                             Preferences.clearActiveSession(context);

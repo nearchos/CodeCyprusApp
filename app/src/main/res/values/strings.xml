@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2016.
+  ~ Copyright (c) 2017.
   ~
   ~ This file is part of the Code Cyprus App.
   ~
@@ -21,10 +21,10 @@
 <resources>
 
     <string translatable="false" name="app_name">Code Cyprus</string>
-    <string translatable="false" name="version_name">1.5.0</string>
+    <string translatable="false" name="version_name">1.6.0</string>
 
     <!--about dialog-->
-    <string name="about_aspectsense">Developed by\nAspectSense.com © 2011–2016</string>
+    <string name="about_aspectsense">Developed by\nAspectSense.com © 2014–2017</string>
     <string name="Rate_us">Rate us</string>
     <string name="Dismiss">Dismiss</string>
     <string name="AspectSense_icon">AspectSense</string>

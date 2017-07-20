@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright (c) 2017.
+  ~
+  ~ This file is part of the Code Cyprus App.
+  ~
+  ~ The Code Cyprus App is free software: you can redistribute it and/or
+  ~ modify it under the terms of the GNU General Public License as
+  ~ published by the Free Software Foundation, either version 3 of
+  ~ the License, or (at your option) any later version.
+  ~
+  ~  Code Cyprus App is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Code Cyprus App. If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/app_background"
+    android:padding="16dp"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+
+    <Button
+        android:id="@+id/activity_home_button_start"
+        android:text="@string/Lets_get_started"
+        android:textStyle="bold"
+        android:drawableRight="@drawable/ic_media_embed_play"
+        android:drawableEnd="@drawable/ic_media_embed_play"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_start_height"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/activity_home_text"
+        android:text="@string/Ahoy"
+        android:textSize="@dimen/text_size"
+        android:background="@drawable/popup_inline_error_right_am"
+        android:layout_toLeftOf="@id/activity_home_imageview_pirate"
+        android:layout_toStartOf="@id/activity_home_imageview_pirate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/activity_home_imageview_pirate"
+        android:src="@drawable/pirate_android_small"
+        android:contentDescription="@string/Android_pirate"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

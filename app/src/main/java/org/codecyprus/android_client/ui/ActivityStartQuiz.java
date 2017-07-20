@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016.
+ * Copyright (c) 2017.
  *
  * This file is part of the Code Cyprus App.
  *
@@ -23,6 +23,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.*;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -120,11 +121,14 @@ public class ActivityStartQuiz extends Activity
         progressReceiver = new ProgressReceiver();
     }
 
+    private String code = "";
+
     @Override
     protected void onResume()
     {
         super.onResume();
         registerReceiver(progressReceiver, intentFilter);
+        code = PreferenceManager.getDefaultSharedPreferences(this).getString("code", "");
     }
 
     @Override
@@ -132,6 +136,32 @@ public class ActivityStartQuiz extends Activity
     {
         super.onPause();
         unregisterReceiver(progressReceiver);
+    }
+
+    private void enterCode()
+    {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle(R.string.Enter_code);
+
+        // Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                code = input.getText().toString();
+                PreferenceManager.getDefaultSharedPreferences(ActivityStartQuiz.this).edit().putString("code", code).apply();
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.show();
     }
 
     @Override
@@ -291,32 +321,4 @@ public class ActivityStartQuiz extends Activity
     {
         return target != null && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
-
-    private String code = "";
-
-    private void enterCode()
-    {
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-
-        alert.setTitle(R.string.Enter_code);
-
-        // Set an EditText view to get user input
-        final EditText input = new EditText(this);
-        alert.setView(input);
-
-        alert.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                code = input.getText().toString();
-            }
-        });
-
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                // Canceled.
-            }
-        });
-
-        alert.show();
-    }
-
 }
