@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+        android:title="@string/app_name"
+        android:icon="@drawable/ic_launcher"
+        android:summary="@string/codecyprus_dot_org_url">
+        <intent android:action="android.intent.action.VIEW"
+            android:data="@string/codecyprus_dot_org_url" />
+    </Preference>
+
+    <Preference
+        android:key="rateUs"
+        android:icon="@drawable/ic_favorite_border_black_24dp"
+        android:title="@string/Love_the_app"
+        android:summary="@string/Rate_us"/>
+
+    <Preference
+        android:key="share"
+        android:icon="@drawable/ic_share_black_24dp"
+        android:title="@string/Tell_the_world"
+        android:summary="@string/Share_with_your_friends"/>
+
+    <Preference
+        android:icon="@drawable/ic_build_black_24dp"
+        android:key="applicationVersion"
+        android:title="@string/Version"/>
+
+    <Preference
+        android:icon="@drawable/ic_code_black_24dp"
+        android:key="applicationCode"
+        android:title="@string/Curious_to_see_the_code"
+        android:summary="@string/Visit_the_Github_page"/>
+
+</PreferenceScreen>

@@ -48,8 +48,8 @@ import java.util.HashMap;
 /**
  * @author Nearchos Paspallis on 23/12/13.
  */
-public class ActivityStartQuiz extends Activity
-{
+public class ActivityStartQuiz extends Activity {
+
     public static final String TAG = "codecyprus";
 
     public static final String EXTRA_CATEGORY = "extra_category";
@@ -57,10 +57,9 @@ public class ActivityStartQuiz extends Activity
     private Category category;
 
     private EditText teamNameEditText;
+    private EditText teamEmailEditText;
     private EditText pirate1NameEditText;
-    private EditText pirate1EmailEditText;
     private EditText pirate2NameEditText;
-    private EditText pirate2EmailEditText;
     private Button submitButton;
 
     private boolean hasSecondPirate = false;
@@ -68,8 +67,7 @@ public class ActivityStartQuiz extends Activity
     private final IntentFilter intentFilter = new IntentFilter(SyncService.ACTION_START_QUIZ_COMPLETED);
     private ProgressReceiver progressReceiver;
 
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_start_quiz);
@@ -113,10 +111,9 @@ public class ActivityStartQuiz extends Activity
         });
 
         teamNameEditText = (EditText) findViewById(R.id.activity_start_quiz_team_name);
+        teamEmailEditText = (EditText) findViewById(R.id.activity_start_quiz_team_email);
         pirate1NameEditText = (EditText) findViewById(R.id.activity_start_quiz_pirate1_name);
-        pirate1EmailEditText = (EditText) findViewById(R.id.activity_start_quiz_pirate1_email);
         pirate2NameEditText = (EditText) findViewById(R.id.activity_start_quiz_pirate2_name);
-        pirate2EmailEditText = (EditText) findViewById(R.id.activity_start_quiz_pirate2_email);
 
         progressReceiver = new ProgressReceiver();
     }
@@ -124,22 +121,19 @@ public class ActivityStartQuiz extends Activity
     private String code = "";
 
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
         registerReceiver(progressReceiver, intentFilter);
         code = PreferenceManager.getDefaultSharedPreferences(this).getString("code", "");
     }
 
     @Override
-    protected void onPause()
-    {
+    protected void onPause() {
         super.onPause();
         unregisterReceiver(progressReceiver);
     }
 
-    private void enterCode()
-    {
+    private void enterCode() {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
         alert.setTitle(R.string.Enter_code);
@@ -165,8 +159,7 @@ public class ActivityStartQuiz extends Activity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(R.string.ENTER_CODE)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
 
@@ -174,115 +167,84 @@ public class ActivityStartQuiz extends Activity
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
+    public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == android.R.id.home)
         {
             finish();
             return true;
-        }
-        else if(getString(R.string.ENTER_CODE).equals(item.getTitle()))
-        {
+        } else if(getString(R.string.ENTER_CODE).equals(item.getTitle())) {
             enterCode();
             return true;
-        }
-        else
-        {
+        } else {
             return super.onOptionsItemSelected(item);
         }
     }
 
-    private void startQuiz()
-    {
+    private void startQuiz() {
         final String teamName = teamNameEditText.getText() == null ? "" : teamNameEditText.getText().toString().trim();
+        final String teamEmail = teamEmailEditText.getText() == null ? "unknown@somewhere.com" : teamEmailEditText.getText().toString().trim();
         final String name1 = pirate1NameEditText.getText() == null ? "" : pirate1NameEditText.getText().toString().trim();
-        final String email1 = pirate1EmailEditText.getText() == null ? "" : pirate1EmailEditText.getText().toString().trim();
         final String name2 = pirate2NameEditText.getText() == null ? "" : pirate2NameEditText.getText().toString().trim();
-        final String email2 = pirate2EmailEditText.getText() == null ? "" : pirate2EmailEditText.getText().toString().trim();
 
         final StringBuilder errorMessage = new StringBuilder();
-        if(teamName.isEmpty())
-        {
+        if(teamName.isEmpty()) {
             errorMessage.append(getString(R.string.Team_name)).append('\n');
             errorMessage.append(" - ").append(getString(R.string.Empty_name)).append('\n');
         }
 
-        if(name1.isEmpty() || email1.isEmpty() || !isValidEmail(email1))
-        {
-            errorMessage.append(getString(R.string.First_pirate)).append('\n');
-            if(name1.isEmpty()) errorMessage.append(" - ").append(getString(R.string.Empty_name)).append('\n');
-            if(email1.isEmpty())
-            {
-                errorMessage.append(" - ").append(getString(R.string.Empty_email)).append('\n');
-            }
-            else if(!isValidEmail(email1))
-            {
-                errorMessage.append(" - ").append(getString(R.string.Invalid_email)).append('\n');
-            }
+        if(teamEmail.isEmpty()) {
+            errorMessage.append(getString(R.string.Email)).append('\n');
+            errorMessage.append(" - ").append(getString(R.string.Empty_email)).append('\n');
+        } else if(!isValidEmail(teamEmail)) {
+            errorMessage.append(" - ").append(getString(R.string.Invalid_email)).append('\n');
         }
 
-        if(hasSecondPirate)
-        {
-            if(name2.isEmpty() || email2.isEmpty() || !isValidEmail(email2))
-            {
-                errorMessage.append(getString(R.string.Second_pirate)).append('\n');
-                if(name2.isEmpty()) errorMessage.append(" - ").append(getString(R.string.Empty_name)).append('\n');
-                if(email2.isEmpty())
-                {
-                    errorMessage.append(" - ").append(getString(R.string.Empty_email)).append('\n');
-                }
-                else if(!isValidEmail(email2))
-                {
-                    errorMessage.append(" - ").append(getString(R.string.Invalid_email)).append('\n');
-                }
+        if(name1.isEmpty()) {
+            errorMessage.append(getString(R.string.First_pirate)).append(" - ").append(getString(R.string.Empty_name)).append('\n');
+        }
+
+        if(hasSecondPirate) {
+            if(name2.isEmpty()) {
+                errorMessage.append(getString(R.string.Second_pirate)).append(" - ").append(getString(R.string.Empty_name)).append('\n');
             }
         }
 
         final String message = errorMessage.toString();
-        if(message.isEmpty())
-        {
+        if(message.isEmpty()) {
             // call 'start quiz' service
             final Intent startQuizIntent = new Intent(this, SyncService.class);
             startQuizIntent.setAction(SyncService.ACTION_START_QUIZ);
-            final HashMap<String,String> parameters = new HashMap<String, String>();
+            final HashMap<String,String> parameters = new HashMap<>();
             parameters.put("playerName", teamName);
             parameters.put("appID", "codecyprus");
             parameters.put("categoryUUID", category.getUUID());
             if(code != null && code.length() > 0) parameters.put("code", code);
+            parameters.put("teamEmail", teamEmail);
             parameters.put("name1", name1);
-            parameters.put("email1", email1);
             parameters.put("name2", name2);
-            parameters.put("email2", email2);
             parameters.put("installationID", Installation.id(this));
             startQuizIntent.putExtra(SyncService.EXTRA_PARAMETERS, parameters);
             setProgressBarIndeterminateVisibility(true);
             startService(startQuizIntent);
-        }
-        else
-        {
+        } else {
             submitButton.setEnabled(true);
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         }
     }
 
-    private class ProgressReceiver extends BroadcastReceiver
-    {
-        @Override public void onReceive(final Context context, final Intent intent)
-        {
+    private class ProgressReceiver extends BroadcastReceiver {
+        @Override public void onReceive(final Context context, final Intent intent) {
             final String payload = (String) intent.getSerializableExtra(SyncService.EXTRA_PAYLOAD);
             setProgressBarIndeterminateVisibility(false);
 
-            if(payload != null)
-            {
-                try
-                {
+            if(payload != null) {
+                try {
                     final String sessionUUID = JsonParser.parseStartQuiz(payload);
 
                     final String teamName = teamNameEditText.getText() == null ? "" : teamNameEditText.getText().toString().trim();
+                    final String teamEmail = teamEmailEditText.getText() == null ? "" : teamEmailEditText.getText().toString().trim();
                     final String name1 = pirate1NameEditText.getText() == null ? "" : pirate1NameEditText.getText().toString().trim();
-                    final String email1 = pirate1EmailEditText.getText() == null ? "" : pirate1EmailEditText.getText().toString().trim();
                     final String name2 = pirate2NameEditText.getText() == null ? "" : pirate2NameEditText.getText().toString().trim();
-                    final String email2 = pirate2EmailEditText.getText() == null ? "" : pirate2EmailEditText.getText().toString().trim();
 
                     final SerializableSession serializableSession = new SerializableSession(
                             category.getUUID(),
@@ -290,35 +252,25 @@ public class ActivityStartQuiz extends Activity
                             category.getLocationUUID(),
                             sessionUUID,
                             teamName,
+                            teamEmail,
                             name1,
-                            email1,
-                            name2,
-                            email2);
+                            name2);
 
                     Preferences.addSession(context, serializableSession);
                     Preferences.setActiveSession(context, serializableSession);
 
                     // start current question activity
                     startActivity(new Intent(context, ActivityCurrentQuestion.class));
-                }
-                catch (JsonParseException jsonpe)
-                {
-                    Log.e(TAG, jsonpe.getMessage());
+                } catch (JsonParseException | JSONException e) {
+                    Log.e(TAG, e.getMessage());
                     submitButton.setEnabled(true);
-                    new DialogError(context, jsonpe.getMessage()).show();
-                }
-                catch (JSONException jsone)
-                {
-                    Log.e(TAG, jsone.getMessage());
-                    submitButton.setEnabled(true);
-                    new DialogError(context, jsone.getMessage()).show();
+                    new DialogError(context, e.getMessage()).show();
                 }
             }
         }
     }
 
-    public static boolean isValidEmail(CharSequence target)
-    {
+    public static boolean isValidEmail(CharSequence target) {
         return target != null && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 }

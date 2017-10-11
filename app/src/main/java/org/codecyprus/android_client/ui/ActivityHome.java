@@ -66,7 +66,7 @@ public class ActivityHome extends Activity
         }
         else if(getString(R.string.ABOUT).equals(item.getTitle()))
         {
-            new DialogAbout(this).show();
+            startActivity(new Intent(this, ActivityAbout.class));
             return true;
         }
         else

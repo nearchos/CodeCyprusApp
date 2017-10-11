@@ -40,6 +40,7 @@
                     android:src="@drawable/pirate_android_smaller"
                     android:contentDescription="@string/Android_pirate"
                     android:layout_marginRight="16dp"
+                    android:layout_marginEnd="16dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -53,146 +54,117 @@
         </LinearLayout>
 
         <LinearLayout
-                android:orientation="vertical"
-                android:background="@color/semitransparent_white"
-                android:layout_marginTop="16dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/semitransparent_white"
+            android:orientation="vertical">
 
             <TextView
-                    android:text="@string/Team_name"
-                    android:textSize="@dimen/text_size"
-                    android:textStyle="bold"
-                    android:textColor="@color/pirate_red"
-                    android:padding="8dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/Team"
+                android:textColor="@color/pirate_red"
+                android:textSize="@dimen/text_size"
+                android:textStyle="bold" />
 
             <EditText
-                    android:id="@+id/activity_start_quiz_team_name"
-                    android:inputType="text"
-                    android:layout_margin="8dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                android:id="@+id/activity_start_quiz_team_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:hint="@string/Team_name"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/activity_start_quiz_team_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:hint="@string/Email"
+                android:inputType="textEmailAddress" />
 
             <TextView
-                    android:text="@string/First_pirate"
-                    android:textSize="@dimen/text_size"
-                    android:textStyle="bold"
-                    android:textColor="@color/pirate_red"
-                    android:padding="8dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/First_pirate"
+                android:textColor="@color/pirate_red"
+                android:textSize="@dimen/text_size"
+                android:textStyle="bold" />
 
             <LinearLayout
-                    android:padding="8dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp">
 
                 <TextView
-                        android:text="@string/Name"
-                        android:textSize="@dimen/text_size"
-                        android:layout_width="60dp"
-                        android:layout_height="wrap_content"/>
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Name"
+                    android:textSize="@dimen/text_size" />
 
                 <EditText
-                        android:id="@+id/activity_start_quiz_pirate1_name"
-                        android:inputType="text"
-                        android:layout_marginLeft="16dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                    android:padding="8dp"
+                    android:id="@+id/activity_start_quiz_pirate1_name"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                <TextView
-                        android:text="@string/Email"
-                        android:textSize="@dimen/text_size"
-                        android:layout_width="60dp"
-                        android:layout_height="wrap_content"/>
-
-                <EditText
-                        android:id="@+id/activity_start_quiz_pirate1_email"
-                        android:inputType="textEmailAddress"
-                        android:layout_marginLeft="16dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
+                    android:inputType="text" />
 
             </LinearLayout>
 
             <Button
-                    android:id="@+id/activity_start_quiz_button_add_second_pirate"
-                    android:text="@string/Add_second_pirate"
-                    android:layout_marginTop="16dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                android:id="@+id/activity_start_quiz_button_add_second_pirate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/Add_second_pirate" />
 
             <LinearLayout
-                    android:id="@+id/activity_start_quiz_second_pirate_container"
-                    android:visibility="gone"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                android:id="@+id/activity_start_quiz_second_pirate_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
-                        android:text="@string/Second_pirate"
-                        android:textSize="@dimen/text_size"
-                        android:textStyle="bold"
-                        android:textColor="@color/pirate_red"
-                        android:padding="8dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="@string/Second_pirate"
+                    android:textColor="@color/pirate_red"
+                    android:textSize="@dimen/text_size"
+                    android:textStyle="bold" />
 
                 <LinearLayout
-                        android:padding="8dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp">
 
                     <TextView
-                            android:text="@string/Name"
-                            android:textSize="@dimen/text_size"
-                            android:layout_width="60dp"
-                            android:layout_height="wrap_content"/>
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Name"
+                        android:textSize="@dimen/text_size" />
 
                     <EditText
-                            android:id="@+id/activity_start_quiz_pirate2_name"
-                            android:inputType="text"
-                            android:layout_marginLeft="16dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                        android:padding="8dp"
+                        android:id="@+id/activity_start_quiz_pirate2_name"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                    <TextView
-                            android:text="@string/Email"
-                            android:textSize="@dimen/text_size"
-                            android:layout_width="60dp"
-                            android:layout_height="wrap_content"/>
-
-                    <EditText
-                            android:id="@+id/activity_start_quiz_pirate2_email"
-                            android:inputType="textEmailAddress"
-                            android:layout_marginLeft="16dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
+                        android:inputType="text" />
 
                 </LinearLayout>
 
                 <Button
-                        android:id="@+id/activity_start_quiz_button_remove_second_pirate"
-                        android:text="@string/Remove_second_pirate"
-                        android:layout_marginTop="16dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                    android:id="@+id/activity_start_quiz_button_remove_second_pirate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/Remove_second_pirate" />
 
             </LinearLayout>
 
@@ -202,6 +174,7 @@
                 android:id="@+id/activity_start_quiz_button_start"
                 android:text="@string/Find_the_Treasure"
                 android:drawableRight="@drawable/ic_media_embed_play"
+                android:drawableEnd="@drawable/ic_media_embed_play"
                 android:layout_marginTop="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/button_start_height"/>

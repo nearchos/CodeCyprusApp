@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2017.
   ~
   ~ This file is part of the Code Cyprus App.
@@ -20,8 +19,8 @@
 
 <resources>
 
-    <string translatable="false" name="app_name">Code Cyprus</string>
-    <string translatable="false" name="version_name">1.6.0</string>
+    <string name="app_name" translatable="false">Code Cyprus</string>
+    <string name="version_name" translatable="false">1.6.0</string>
 
     <!--about dialog-->
     <string name="about_aspectsense">Developed by\nAspectSense.com © 2014–2017</string>
@@ -35,6 +34,14 @@
     <string name="Start_new">Start new</string>
     <string name="Cancel">Cancel</string>
     <string name="Cancelled">Cancelled</string>
+    <string name="Version">Version</string>
+    <string name="Install">Install</string>
+    <string name="Share">Share</string>
+    <string name="Love_the_app">Love the app?</string>
+    <string name="Tell_the_world">Tell the world</string>
+    <string name="Share_with_your_friends">Share with your friends</string>
+    <string name="Curious_to_see_the_code">Curious to see the code?</string>
+    <string name="Visit_the_Github_page">Visit the project\'s Github page</string>
 
     <!--skip dialog-->
     <string name="Skip_question">Skip question?</string>
@@ -44,10 +51,11 @@
     <string name="Confirm_MCQ">Please confirm your answer</string>
     <string name="Are_you_sure_you_want_to_submit_for_the_current_question">Are you sure you want to submit \'%1$s\' for the current question?</string>
 
-    <string translatable="false" name="codecyprus_dot_org_url">http://codecyprus.org</string>
-    <string translatable="false" name="aspectsense_dot_com_url">http://aspectsense.com</string>
+    <string name="codecyprus_dot_org_url" translatable="false">http://codecyprus.org</string>
+    <string name="aspectsense_dot_com_url" translatable="false">http://aspectsense.com</string>
 
-    <string name="Ahoy">Ahoy pirates! And welcome to the Code Cyprus\' Treasure Hunt!\n\nIf you have questions, select the \'Help\' menu. When you are ready, click the button below to get started!</string>    <string name="Start">Start</string>
+    <string name="Ahoy">Ahoy pirates! And welcome to the Code Cyprus\' Treasure Hunt!\n\nIf you have questions, select the \'Help\' menu. When you are ready, click the button below to get started!</string>
+    <string name="Start">Start</string>
     <string name="Lets_get_started">Let\'s get started!</string>
     <string name="Android_pirate">Android pirate</string>
     <string name="Select_a_category">Select a category</string>
@@ -90,11 +98,12 @@
     <string name="Team_names_and_emails">Ahoy, we are looking for the \'%1$s\' treasure. Now tell us you team\'s names and emails and we are ready to go!</string>
     <string name="Add_second_pirate">Add second pirate</string>
     <string name="Remove_second_pirate">Remove second pirate</string>
+    <string name="Team">Team</string>
     <string name="Team_name">Team name</string>
     <string name="First_pirate">First pirate</string>
     <string name="Second_pirate">Second pirate</string>
     <string name="Name">Name</string>
-    <string translatable="false" name="Email">Email</string>
+    <string name="Email" translatable="false">Email</string>
     <string name="Empty_name">Empty name</string>
     <string name="Empty_email">Empty email</string>
     <string name="Invalid_email">Invalid email</string>
@@ -135,8 +144,10 @@
     <string name="Finished_in">Finished in: %1$s</string>
     <string name="Not_finished_yet">Not finished yet</string>
     <string name="ENTER_CODE">Enter code</string>
-    <string translatable="false" name="placeholder">placeholder</string>
+    <string name="placeholder" translatable="false">placeholder</string>
 
-    <string translatable="false" name="Feedback">Feedback</string>
+    <string name="Feedback" translatable="false">Feedback</string>
     <string name="Scan_a_QR_code">Scan a QR code</string>
+    <string name="title_activity_about">About</string>
+
 </resources>

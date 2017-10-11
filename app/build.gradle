@@ -8,7 +8,7 @@
  * published by the Free Software Foundation, either version 3 of
  * the License, or (at your option) any later version.
  *
- *  Code Cyprus App is distributed in the hope that it will be useful,
+ * Code Cyprus App is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -23,13 +23,14 @@ android {
     signingConfigs {
     }
     compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "org.codecyprus.android_client"
         minSdkVersion 14
         targetSdkVersion 19
         versionCode 7
-        versionName "1.6.0-" + versionCode + " built on " + getDate()
+        versionName "1.7.0-" + versionCode + " built on " + getDate()
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -53,9 +54,11 @@ repositories {
 }
 
 dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.journeyapps:zxing-android-embedded:3.0.2@aar'
     compile 'com.google.zxing:core:3.2.0'
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.android.support:support-vector-drawable:25.3.1'
+    testCompile 'junit:junit:4.12'
 }
