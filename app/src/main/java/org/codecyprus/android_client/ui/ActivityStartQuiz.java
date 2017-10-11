@@ -19,11 +19,17 @@
 
 package org.codecyprus.android_client.ui;
 
+import android.Manifest;
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.*;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -43,7 +49,10 @@ import org.codecyprus.android_client.sync.JsonParser;
 import org.codecyprus.android_client.sync.SyncService;
 import org.json.JSONException;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Nearchos Paspallis on 23/12/13.
@@ -120,11 +129,40 @@ public class ActivityStartQuiz extends Activity {
 
     private String code = "";
 
+    public static final int PERMISSIONS_REQUEST_GET_ACCOUNT = 43;
+
     @Override
     protected void onResume() {
         super.onResume();
         registerReceiver(progressReceiver, intentFilter);
         code = PreferenceManager.getDefaultSharedPreferences(this).getString("code", "");
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && (checkSelfPermission(Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED)) {
+            requestPermissions(new String[] { Manifest.permission.GET_ACCOUNTS }, PERMISSIONS_REQUEST_GET_ACCOUNT);
+        } else {
+            selectAccount();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == PERMISSIONS_REQUEST_GET_ACCOUNT) {
+            selectAccount();
+        }
+        // do nothing if denied
+    }
+
+    private void selectAccount() {
+        final AccountManager accountManager = AccountManager.get(this);
+        final Account[] accounts = accountManager.getAccountsByType("com.google");
+
+        if(accounts.length == 0) {
+            // do nothing
+        } else { // accounts.length >= 1
+            // select the single email
+            teamEmailEditText.setText(accounts[0].name);
+        }
     }
 
     @Override
