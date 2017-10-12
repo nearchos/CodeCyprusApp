@@ -35,7 +35,7 @@
     <string name="Cancel">Cancel</string>
     <string name="Cancelled">Cancelled</string>
     <string name="Version">Version</string>
-    <string name="Install">Install</string>
+    <string name="Install">Wanted to tell you how cool Code Cyprus is! See for yourself at codecyprus.org</string>
     <string name="Share">Share</string>
     <string name="Love_the_app">Love the app?</string>
     <string name="Tell_the_world">Tell the world</string>
@@ -148,6 +148,5 @@
 
     <string name="Feedback" translatable="false">Feedback</string>
     <string name="Scan_a_QR_code">Scan a QR code</string>
-    <string name="title_activity_about">About</string>
 
 </resources>

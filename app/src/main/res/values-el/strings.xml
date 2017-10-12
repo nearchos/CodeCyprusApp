@@ -33,6 +33,15 @@
     <string name="Cancel">Άκυρο</string>
     <string name="Cancelled">Ακυρώθηκε</string>
 
+    <string name="Version">Έκδοση</string>
+    <string name="Install">Κοίταξες καθόλου το Code Cyprus; Είναι καταπληκτικό! Δες και εσυ στό codecyprus.org</string>
+    <string name="Share">Μοιραστείτε το</string>
+    <string name="Love_the_app">Σας αρέσει η εφαρμογή;</string>
+    <string name="Tell_the_world">Πέστε το σε όλους!</string>
+    <string name="Share_with_your_friends">Μοιραστείτε το με τους φίλους σας</string>
+    <string name="Curious_to_see_the_code">Σας ενδιαφέρει ο κώδικας;</string>
+    <string name="Visit_the_Github_page">Επισκεφθείτε τη σελίδα μας στο Github</string>
+
     <!--skip dialog-->
     <string name="Skip_question">Παράληψη ερώτησης;</string>
     <string name="Are_you_sure_you_want_to_skip_the_current_question">Είστε σίγουροι ότι θέλετε να προσπεράσετε την ερώτηση;</string>
