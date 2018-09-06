@@ -52,9 +52,9 @@ public class Preferences
         final Set<String> jsonSessions = sharedPreferences.getStringSet(SESSION_KEYS, new HashSet<String>());
 
         final Set<SerializableSession> allSessions = new HashSet<SerializableSession>();
-        for(final String jsonSession : jsonSessions)
-        {
-            allSessions.add(SerializableSession.fromJSON(jsonSession));
+        for(final String jsonSession : jsonSessions) {
+            final SerializableSession serializableSession = SerializableSession.fromJSON(jsonSession);
+            allSessions.add(serializableSession);
         }
 
         return allSessions;

@@ -26,6 +26,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.*;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -49,10 +51,11 @@ import org.codecyprus.android_client.sync.JsonParser;
 import org.codecyprus.android_client.sync.SyncService;
 import org.json.JSONException;
 
-import java.util.Arrays;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Locale;
 
 /**
  * @author Nearchos Paspallis on 23/12/13.
@@ -69,17 +72,21 @@ public class ActivityStartQuiz extends Activity {
     private EditText teamEmailEditText;
     private EditText pirate1NameEditText;
     private EditText pirate2NameEditText;
-    private Button submitButton;
+    private Button startQuizButton;
 
     private boolean hasSecondPirate = false;
 
     private final IntentFilter intentFilter = new IntentFilter(SyncService.ACTION_START_QUIZ_COMPLETED);
     private ProgressReceiver progressReceiver;
 
+    private ConnectivityManager connectivityManager = null;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_start_quiz);
+
+        connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         category = (Category) getIntent().getSerializableExtra(EXTRA_CATEGORY);
 
@@ -108,20 +115,32 @@ public class ActivityStartQuiz extends Activity {
             }
         });
 
-        submitButton = (Button) findViewById(R.id.activity_start_quiz_button_start);
-        submitButton.setOnClickListener(new View.OnClickListener()
+        startQuizButton = (Button) findViewById(R.id.activity_start_quiz_button_start);
+        startQuizButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                submitButton.setEnabled(false);
-                startQuiz();
+                tryToStartQuiz();
             }
         });
 
         teamNameEditText = (EditText) findViewById(R.id.activity_start_quiz_team_name);
         teamEmailEditText = (EditText) findViewById(R.id.activity_start_quiz_team_email);
         pirate1NameEditText = (EditText) findViewById(R.id.activity_start_quiz_pirate1_name);
+        // when pirate1 edittext receives focus, then if empty set to the id of the email
+        pirate1NameEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if(hasFocus && pirate1NameEditText.getText().toString().isEmpty()) {
+                    final String teamEmail = teamEmailEditText.getText().toString().trim();
+                    if(teamEmail.contains("@")) {
+                        pirate1NameEditText.setText(teamEmail.substring(0, teamEmail.indexOf('@')));
+                        pirate1NameEditText.selectAll();
+                    }
+                }
+            }
+        });
         pirate2NameEditText = (EditText) findViewById(R.id.activity_start_quiz_pirate2_name);
 
         progressReceiver = new ProgressReceiver();
@@ -184,6 +203,14 @@ public class ActivityStartQuiz extends Activity {
             public void onClick(DialogInterface dialog, int whichButton) {
                 code = input.getText().toString();
                 PreferenceManager.getDefaultSharedPreferences(ActivityStartQuiz.this).edit().putString("code", code).apply();
+                // try to connect bypassing non-started categories
+                final String errorMessage = validateUserInput();
+                if(!errorMessage.isEmpty()) {
+                    startQuizButton.setEnabled(true);
+                    Toast.makeText(ActivityStartQuiz.this, errorMessage, Toast.LENGTH_SHORT).show();
+                } else {
+                    uploadStartQuizRequest();
+                }
             }
         });
 
@@ -218,7 +245,38 @@ public class ActivityStartQuiz extends Activity {
         }
     }
 
-    private void startQuiz() {
+    private void tryToStartQuiz() {
+        final String errorMessage = validateUserInput();
+        if(!errorMessage.isEmpty()) {
+            startQuizButton.setEnabled(true);
+            Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
+        } else {
+            final NetworkInfo activeNetwork = connectivityManager == null ? null : connectivityManager.getActiveNetworkInfo();
+            boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+
+            if(isConnected) {
+                startQuiz();
+            } else {
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.No_Internet)
+                        .setMessage(R.string.It_seems_like_you_are_not_connected_to_Internet)
+                        .setPositiveButton(R.string.Retry, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                                tryToStartQuiz();
+                            }
+                        })
+                        .setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            }
+                        }).create().show();
+            }
+        }
+    }
+
+    private String validateUserInput()
+    {
         final String teamName = teamNameEditText.getText() == null ? "" : teamNameEditText.getText().toString().trim();
         final String teamEmail = teamEmailEditText.getText() == null ? "unknown@somewhere.com" : teamEmailEditText.getText().toString().trim();
         final String name1 = pirate1NameEditText.getText() == null ? "" : pirate1NameEditText.getText().toString().trim();
@@ -247,29 +305,62 @@ public class ActivityStartQuiz extends Activity {
             }
         }
 
-        final String message = errorMessage.toString();
-        if(message.isEmpty()) {
-            // call 'start quiz' service
-            final Intent startQuizIntent = new Intent(this, SyncService.class);
-            startQuizIntent.setAction(SyncService.ACTION_START_QUIZ);
-            final HashMap<String,String> parameters = new HashMap<>();
-            parameters.put("playerName", teamName);
-            parameters.put("appID", "codecyprus");
-            parameters.put("categoryUUID", category.getUUID());
-            if(code != null && code.length() > 0) parameters.put("code", code);
-            parameters.put("teamEmail", teamEmail);
-            parameters.put("name1", name1);
-            parameters.put("name2", name2);
-            parameters.put("installationID", Installation.id(this));
-            startQuizIntent.putExtra(SyncService.EXTRA_PARAMETERS, parameters);
-            setProgressBarIndeterminateVisibility(true);
-            startService(startQuizIntent);
-        } else {
-            submitButton.setEnabled(true);
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        return errorMessage.toString();
+    }
+
+    private void startQuiz() {
+        final String validFromS = category.getValidFrom();
+        try {
+            final Date validFrom = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm", Locale.US).parse(validFromS); // 2016-12-10T07:00
+            if(validFrom.after(new Date())) { // category not active yet
+                final String startsInTime = CategoriesAdapter.timeInText(this, validFrom.getTime() - System.currentTimeMillis());
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.Inactive_category)
+                        .setMessage(getString(R.string.The_selected_category_is_not_active_yet, startsInTime))
+                        .setPositiveButton(R.string.Try_again, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                                tryToStartQuiz();
+                            }
+                        })
+                        .setNegativeButton(R.string.Wait, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            }
+                        }).create().show();
+            } else {
+                uploadStartQuizRequest();
+            }
+        } catch (ParseException pe) {
+            Log.d(TAG, "Could not parse 'validFrom': " + validFromS + ". Parse error: " + pe.getMessage());
         }
     }
 
+    private void uploadStartQuizRequest() {
+        startQuizButton.setEnabled(false);
+
+        final String teamName = teamNameEditText.getText() == null ? "" : teamNameEditText.getText().toString().trim();
+        final String teamEmail = teamEmailEditText.getText() == null ? "unknown@somewhere.com" : teamEmailEditText.getText().toString().trim();
+        final String name1 = pirate1NameEditText.getText() == null ? "" : pirate1NameEditText.getText().toString().trim();
+        final String name2 = pirate2NameEditText.getText() == null ? "" : pirate2NameEditText.getText().toString().trim();
+        final Intent startQuizIntent = new Intent(this, SyncService.class);
+        startQuizIntent.setAction(SyncService.ACTION_START_QUIZ);
+        final HashMap<String,String> parameters = new HashMap<>();
+        parameters.put("playerName", teamName);
+        parameters.put("appID", "codecyprus");
+        parameters.put("categoryUUID", category.getUUID());
+        if(code != null && code.length() > 0) parameters.put("code", code);
+        parameters.put("teamEmail", teamEmail);
+        parameters.put("name1", name1);
+        parameters.put("name2", name2);
+        parameters.put("installationID", Installation.id(this));
+        startQuizIntent.putExtra(SyncService.EXTRA_PARAMETERS, parameters);
+        setProgressBarIndeterminateVisibility(true);
+        // call 'start quiz' service
+        startService(startQuizIntent);
+    }
+
+    // when pirate1 edittext receives focus, if empty set to the id of the email
     private class ProgressReceiver extends BroadcastReceiver {
         @Override public void onReceive(final Context context, final Intent intent) {
             final String payload = (String) intent.getSerializableExtra(SyncService.EXTRA_PAYLOAD);
@@ -301,7 +392,7 @@ public class ActivityStartQuiz extends Activity {
                     startActivity(new Intent(context, ActivityCurrentQuestion.class));
                 } catch (JsonParseException | JSONException e) {
                     Log.e(TAG, e.getMessage());
-                    submitButton.setEnabled(true);
+                    startQuizButton.setEnabled(true);
                     new DialogError(context, e.getMessage()).show();
                 }
             }

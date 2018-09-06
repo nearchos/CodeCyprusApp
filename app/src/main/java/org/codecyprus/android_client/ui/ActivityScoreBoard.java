@@ -21,12 +21,17 @@ package org.codecyprus.android_client.ui;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.widget.ListView;
@@ -55,14 +60,18 @@ public class ActivityScoreBoard extends Activity
     private TextView scoreBoardTitle;
     private ListView listView;
 
+    private ConnectivityManager connectivityManager = null;
+
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_score_board);
 
-        scoreBoardTitle = (TextView) findViewById(R.id.activity_score_board_title);
-        listView = (ListView) findViewById(R.id.activity_score_board_list_view);
+        connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        scoreBoardTitle = findViewById(R.id.activity_score_board_title);
+        listView = findViewById(R.id.activity_score_board_list_view);
 
         final ActionBar actionBar = getActionBar();
         if(actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
@@ -75,7 +84,7 @@ public class ActivityScoreBoard extends Activity
     {
         super.onResume();
         registerReceiver(progressReceiver, intentFilter);
-        refresh();
+        tryToRefreshScoreBoard();
     }
 
     @Override
@@ -86,11 +95,29 @@ public class ActivityScoreBoard extends Activity
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        menu.add(R.string.Scan)
+                .setIcon(R.drawable.ic_qrcode_black_48dp)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
         if(item.getItemId() == android.R.id.home)
         {
             finish();
+            return true;
+        }
+        else if(getString(R.string.Scan).equals(item.getTitle()))
+        {
+            final String sessionUUID = getIntent().getStringExtra("session");
+            final Intent intent = new Intent(this, ActivityGenerateQRCode.class);
+            intent.putExtra("session", sessionUUID);
+            startActivity(intent);
             return true;
         }
         else
@@ -99,7 +126,32 @@ public class ActivityScoreBoard extends Activity
         }
     }
 
-    private void refresh()
+    private void tryToRefreshScoreBoard() {
+        final NetworkInfo activeNetwork = connectivityManager == null ? null : connectivityManager.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+
+        if(isConnected) {
+            refreshScoreBoard();
+        } else {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.No_Internet)
+                    .setMessage(R.string.It_seems_like_you_are_not_connected_to_Internet)
+                    .setPositiveButton(R.string.Retry, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                            tryToRefreshScoreBoard();
+                        }
+                    })
+                    .setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                            finish();
+                        }
+                    }).create().show();
+        }
+    }
+
+    private void refreshScoreBoard()
     {
         final Intent getScoreBoardIntent = new Intent(this, SyncService.class);
         getScoreBoardIntent.setAction(SyncService.ACTION_SCORE_BOARD);

@@ -21,10 +21,14 @@ package org.codecyprus.android_client.ui;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -59,12 +63,16 @@ public class ActivityCategories extends Activity
 
     private Category [] categories;
 
+    private ConnectivityManager connectivityManager = null;
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_categories);
+
+        connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         listView = (ListView) findViewById(R.id.activity_category_list_view);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -98,7 +106,8 @@ public class ActivityCategories extends Activity
     {
         super.onResume();
         registerReceiver(progressReceiver, intentFilter);
-        refresh();
+
+        tryToConnectAndRefresh();
     }
 
     @Override
@@ -133,6 +142,31 @@ public class ActivityCategories extends Activity
         else
         {
             return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void tryToConnectAndRefresh() {
+        final NetworkInfo activeNetwork = connectivityManager == null ? null : connectivityManager.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+
+        if(isConnected) {
+            refresh();
+        } else {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.No_Internet)
+                    .setMessage(R.string.It_seems_like_you_are_not_connected_to_Internet)
+                    .setPositiveButton(R.string.Retry, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                            tryToConnectAndRefresh();
+                        }
+                    })
+                    .setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                            finish();
+                        }
+                    }).create().show();
         }
     }
 

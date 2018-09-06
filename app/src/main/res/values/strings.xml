@@ -86,14 +86,30 @@
     <string name="Valid_from_until">Valid from: %1$s until: %2$s</string>
     <string name="Going_live_in">Going live in: %1$s</string>
     <string name="Ends_in">Ends in: %1$s</string>
-    <string name="just_now">just_now</string>
-    <string name="seconds">%1$s seconds</string>
-    <string name="minutes">%1$s minutes</string>
-    <string name="hours">%1$s hours</string>
-    <string name="days">%1$s days</string>
-    <string name="weeks">%1$s weeks</string>
-    <string name="Finished_ago">Finished: %1$s ago</string>
 
+    <string name="just_now">just_now</string>
+    <plurals name="seconds">
+        <item quantity="one">%1$s second</item>
+        <item quantity="other">%1$s seconds</item>
+    </plurals>
+    <plurals name="minutes">
+        <item quantity="one">%1$s minute</item>
+        <item quantity="other">%1$s minutes</item>
+    </plurals>
+    <plurals name="hours">
+        <item quantity="one">%1$s hour</item>
+        <item quantity="other">%1$s hours</item>
+    </plurals>
+    <plurals name="days">
+        <item quantity="one">%1$s day</item>
+        <item quantity="other">%1$s days</item>
+    </plurals>
+    <plurals name="weeks">
+        <item quantity="one">%1$s week</item>
+        <item quantity="other">%1$s weeks</item>
+    </plurals>
+
+    <string name="Finished_ago">Finished: %1$s ago</string>
     <string name="Find_the_Treasure">Find the Treasure!</string>
     <string name="Team_names_and_emails">Ahoy, we are looking for the \'%1$s\' treasure. Now tell us you team\'s names and emails and we are ready to go!</string>
     <string name="Add_second_pirate">Add second pirate</string>
@@ -148,5 +164,20 @@
 
     <string name="Feedback" translatable="false">Feedback</string>
     <string name="Scan_a_QR_code">Scan a QR code</string>
+    <string name="QR_code">QR code</string>
+
+    <string name="No_Internet">No Internet</string>
+    <string name="It_seems_like_you_are_not_connected_to_Internet">It seems like you are not connected to the Internet.</string>
+    <string name="Retry">Retry</string>
+
+    <string name="URL_detected">URL detected</string>
+    <string name="Would_you_like_to_open_this_URL">Would you like to open page %1$s</string>
+    <string name="Open_URL">Open URL</string>
+    <string name="Use_as_answer">Use as answer</string>
+
+    <string name="Inactive_category">Inactive category</string>
+    <string name="The_selected_category_is_not_active_yet">The selected category is not active yet. It starts in %1$s.</string>
+    <string name="Try_again">Try again</string>
+    <string name="Wait">Wait</string>
 
 </resources>

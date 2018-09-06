@@ -38,7 +38,6 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Holo.Light">
-
         <activity
             android:name=".ui.ActivityHome"
             android:label="@string/app_name">
@@ -76,6 +75,8 @@
         <activity android:name=".ui.ActivityCurrentQuestion" />
 
         <activity android:name=".ui.ActivityScoreBoard" />
+
+        <activity android:name=".ui.ActivityGenerateQRCode"/>
 
         <service android:name=".sync.SyncService" />
 

@@ -20,6 +20,7 @@
 package org.codecyprus.android_client.ui;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -82,16 +83,16 @@ public class CategoriesAdapter extends ArrayAdapter<Category>
             final Date validUntil = SIMPLE_DATE_FORMAT.parse(category.getValidUntil());
             if(now < validFrom.getTime())
             {
-                categoryValidDateAndTime.setText(getContext().getString(R.string.Going_live_in, timeInText(validFrom.getTime() - now)));
+                categoryValidDateAndTime.setText(getContext().getString(R.string.Going_live_in, timeInText(getContext(),validFrom.getTime() - now)));
                 view.setAlpha(0.4f);
             }
             else if(validFrom.getTime() <= now && now < validUntil.getTime())
             {
-                categoryValidDateAndTime.setText(getContext().getString(R.string.Ends_in, timeInText(validUntil.getTime() - now)));
+                categoryValidDateAndTime.setText(getContext().getString(R.string.Ends_in, timeInText(getContext(), validUntil.getTime() - now)));
             }
             else // assert now > validUntil.getTime()
             {
-                categoryValidDateAndTime.setText(getContext().getString(R.string.Finished_ago, timeInText(now - validUntil.getTime())));
+                categoryValidDateAndTime.setText(getContext().getString(R.string.Finished_ago, timeInText(getContext(), now - validUntil.getTime())));
                 view.setAlpha(0.4f);
             }
         }
@@ -129,36 +130,37 @@ public class CategoriesAdapter extends ArrayAdapter<Category>
     public static final long DAY = 24L * HOUR;
     public static final long WEEK = 7L * DAY;
 
-    private String timeInText(final long duration)
+    static String timeInText(final Context context, final long duration)
     {
+        final Resources resources = context.getResources();
         if(duration < SECOND)
         {
-            return getContext().getString(R.string.just_now);
+            return context.getString(R.string.just_now);
         }
         else if(duration < MINUTE)
         {
             final String dt = Long.toString(duration / SECOND);
-            return getContext().getString(R.string.seconds, dt);
+            return resources.getQuantityString(R.plurals.seconds, (int) (duration / SECOND), dt);
         }
         else if(duration < HOUR)
         {
             final String dt = Long.toString(duration / MINUTE);
-            return getContext().getString(R.string.minutes, dt);
+            return resources.getQuantityString(R.plurals.minutes, (int) (duration / MINUTE), dt);
         }
         else if(duration < DAY)
         {
             final String dt = Long.toString(duration / HOUR);
-            return getContext().getString(R.string.hours, dt);
+            return resources.getQuantityString(R.plurals.hours, (int) (duration / HOUR), dt);
         }
         else if(duration < 2 * WEEK)
         {
             final String dt = Long.toString(duration / DAY);
-            return getContext().getString(R.string.days, dt);
+            return resources.getQuantityString(R.plurals.days, (int) (duration / DAY), dt);
         }
         else
         {
             final String dt = Long.toString(duration / WEEK);
-            return getContext().getString(R.string.weeks, dt);
+            return resources.getQuantityString(R.plurals.weeks, (int) (duration / WEEK), dt);
         }
     }
 }

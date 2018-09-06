@@ -21,10 +21,14 @@ package org.codecyprus.android_client.ui;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.*;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Html;
@@ -34,6 +38,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -97,12 +102,16 @@ public class ActivityCurrentQuestion extends Activity
 
     private LocationUpdater locationUpdater;
 
+    private ConnectivityManager connectivityManager = null;
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_current_question);
+
+        connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         actionBar = getActionBar();
 
@@ -128,7 +137,7 @@ public class ActivityCurrentQuestion extends Activity
             @Override
             public void onClick(View v)
             {
-                submitAnswer("A");
+                tryToSubmitAnswer("A");
             }
         });
         buttonB =  (Button) findViewById(R.id.activity_current_question_button_B);
@@ -137,7 +146,7 @@ public class ActivityCurrentQuestion extends Activity
             @Override
             public void onClick(View v)
             {
-                submitAnswer("B");
+                tryToSubmitAnswer("B");
             }
         });
         buttonC = (Button) findViewById(R.id.activity_current_question_button_C);
@@ -146,7 +155,7 @@ public class ActivityCurrentQuestion extends Activity
             @Override
             public void onClick(View v)
             {
-                submitAnswer("C");
+                tryToSubmitAnswer("C");
             }
         });
         buttonD = (Button) findViewById(R.id.activity_current_question_button_D);
@@ -155,7 +164,7 @@ public class ActivityCurrentQuestion extends Activity
             @Override
             public void onClick(View v)
             {
-                submitAnswer("D");
+                tryToSubmitAnswer("D");
             }
         });
         buttonSubmit = (Button) findViewById(R.id.activity_current_question_button_submit);
@@ -173,7 +182,7 @@ public class ActivityCurrentQuestion extends Activity
                 else
                 {
                     inputMethodManager.hideSoftInputFromWindow(textAnswerEditText.getWindowToken(), 0);
-                    submitAnswer(answer);
+                    tryToSubmitAnswer(answer);
                 }
             }
         });
@@ -213,9 +222,8 @@ public class ActivityCurrentQuestion extends Activity
                 @Override
                 public void onDismiss(DialogInterface dialog)
                 {
-                    if(dialogSkip.isSkip())
-                    {
-                        skipQuestion();
+                    if(dialogSkip.isSkip()) {
+                        tryToSkipQuestion();
                     }
                 }
             });
@@ -252,37 +260,70 @@ public class ActivityCurrentQuestion extends Activity
                 Toast.makeText(this, R.string.Cancelled, Toast.LENGTH_LONG).show();
             } else {
                 final String scannedText = intentResult.getContents();
-                Toast.makeText(this, "Scanned: ;" + scannedText + "'", Toast.LENGTH_SHORT).show();
-                recoverSession();
-                requestCurrentQuestion();
-//                if(question.isMCQ()) {
-//                    if("A".equalsIgnoreCase(scannedText) ||
-//                            "B".equalsIgnoreCase(scannedText) ||
-//                            "C".equalsIgnoreCase(scannedText) ||
-//                            "D".equalsIgnoreCase(scannedText)) {
-//                        // todo show dialog?
-//                        final DialogConfirmMCQ dialogConfirmMCQ = new DialogConfirmMCQ(this, scannedText);
-//                        dialogConfirmMCQ.setOnDismissListener(new DialogInterface.OnDismissListener() {
-//                            @Override public void onDismiss(DialogInterface dialog) {
-//                                if(dialogConfirmMCQ.isSubmit()) {
-//                                    submitAnswer(scannedText);
-//                                }
-//                            }
-//                        });
-//                        dialogConfirmMCQ.show();
-//                    } else {
-//                        Toast.makeText(this, "Scanned: " + intentResult.getContents(), Toast.LENGTH_LONG).show();
-//                    }
-//                } else {
-                    textAnswerEditText.setText(scannedText);
-                    textAnswerEditText.selectAll();
-                    textAnswerEditText.requestFocus();
-                    inputMethodManager.showSoftInput(textAnswerEditText, 0);
-//                }
+                handleScannedText(scannedText);
             }
         } else {
             // This is important, otherwise the result will not be passed to the fragment
             super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    private void handleScannedText(final String scannedText)
+    {
+        final boolean isUrl = URLUtil.isValidUrl(scannedText);
+        final String message = getString(R.string.Would_you_like_to_open_this_URL, scannedText);
+        if(isUrl) {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.URL_detected)
+                    .setMessage(message)
+                    .setPositiveButton(R.string.Open_URL, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(scannedText)));
+                        }
+                    })
+                    .setNegativeButton(R.string.Use_as_answer, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                            handleScannedTextAsPlainText(scannedText);
+                        }
+                    }).create().show();
+        } else {
+            handleScannedTextAsPlainText(scannedText);
+        }
+    }
+
+    private void handleScannedTextAsPlainText(final String scannedText)
+    {
+        recoverSession();
+        tryToRequestCurrentQuestion();
+        textAnswerEditText.setText(scannedText);
+        textAnswerEditText.selectAll();
+        textAnswerEditText.requestFocus();
+        inputMethodManager.showSoftInput(textAnswerEditText, 0);
+    }
+
+    private void tryToSkipQuestion() {
+        final NetworkInfo activeNetwork = connectivityManager == null ? null : connectivityManager.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+
+        if(isConnected) {
+            skipQuestion();
+        } else {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.No_Internet)
+                    .setMessage(R.string.It_seems_like_you_are_not_connected_to_Internet)
+                    .setPositiveButton(R.string.Retry, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                            tryToSkipQuestion();
+                        }
+                    })
+                    .setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    }).create().show();
         }
     }
 
@@ -298,7 +339,7 @@ public class ActivityCurrentQuestion extends Activity
     }
 
     private String sessionUUID = null;
-//    private String locationUUID = null;
+
     private String code = "";
 
     @Override
@@ -324,7 +365,7 @@ public class ActivityCurrentQuestion extends Activity
         else
         {
             sessionUUID = serializableSession.getSessionUUID();
-            requestCurrentQuestion();
+            tryToRequestCurrentQuestion();
 
 //            locationUUID = serializableSession.getLocationUUID();
             // request normal (i.e. android-based) location updates
@@ -344,6 +385,32 @@ public class ActivityCurrentQuestion extends Activity
         locationManager.removeUpdates(locationUpdater);
     }
 
+    private void tryToRequestCurrentQuestion()
+    {
+        final NetworkInfo activeNetwork = connectivityManager == null ? null : connectivityManager.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+
+        if(isConnected) {
+            requestCurrentQuestion();
+        } else {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.No_Internet)
+                    .setMessage(R.string.It_seems_like_you_are_not_connected_to_Internet)
+                    .setPositiveButton(R.string.Retry, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                            tryToRequestCurrentQuestion();
+                        }
+                    })
+                    .setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                            finish();
+                        }
+                    }).create().show();
+        }
+    }
+
     private void requestCurrentQuestion()
     {
         final Intent currentQuestionIntent = new Intent(this, SyncService.class);
@@ -351,7 +418,6 @@ public class ActivityCurrentQuestion extends Activity
         final HashMap<String,String> parameters = new HashMap<>();
         parameters.put("session", sessionUUID);
         parameters.put("code", code);
-        // todo add 'code'?
         currentQuestionIntent.putExtra(SyncService.EXTRA_PARAMETERS, parameters);
         setProgressBarIndeterminateVisibility(true);
         startService(currentQuestionIntent);
@@ -370,14 +436,33 @@ public class ActivityCurrentQuestion extends Activity
         startService(scoreIntent);
     }
 
+    private void tryToSubmitAnswer(final String answer) {
+        final NetworkInfo activeNetwork = connectivityManager == null ? null : connectivityManager.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+
+        if(isConnected) {
+            submitAnswer(answer);
+        } else {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.No_Internet)
+                    .setMessage(R.string.It_seems_like_you_are_not_connected_to_Internet)
+                    .setPositiveButton(R.string.Retry, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                            tryToSubmitAnswer(answer);
+                        }
+                    })
+                    .setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    }).create().show();
+        }
+    }
+
     private void submitAnswer(final String answer)
     {
         // upload answer directly
-        uploadAnswer(answer);
-    }
-
-    private void uploadAnswer(final String answer)
-    {
         buttonA.setEnabled(false);
         buttonB.setEnabled(false);
         buttonC.setEnabled(false);
@@ -435,7 +520,7 @@ public class ActivityCurrentQuestion extends Activity
                             feedbackTextView.setText(getString(R.string.Correct));
                             textAnswerEditText.clearComposingText();
                             Toast.makeText(context, R.string.Correct, Toast.LENGTH_SHORT).show();
-                            requestCurrentQuestion();
+                            tryToRequestCurrentQuestion();
                         }
                         else if(answer == CORRECT_FINISHED)
                         {
@@ -457,7 +542,7 @@ public class ActivityCurrentQuestion extends Activity
                         {
                             Toast.makeText(context, R.string.Skipped_has_more_questions, Toast.LENGTH_SHORT).show();
                             feedbackTextView.setVisibility(View.GONE);
-                            requestCurrentQuestion();
+                            tryToRequestCurrentQuestion();
                         }
                         else
                         {

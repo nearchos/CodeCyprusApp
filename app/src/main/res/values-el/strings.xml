@@ -80,12 +80,28 @@
     <string name="Valid_from_until">Έγκυρο από: %1$s μέχρι: %2$s</string>
     <string name="Going_live_in">Ξεκινά σέ: %1$s</string>
     <string name="Ends_in">Τερματίζει σέ: %1$s</string>
+
     <string name="just_now">τώρα</string>
-    <string name="seconds">%1$s δευτερόλεπτα</string>
-    <string name="minutes">%1$s λεπτά</string>
-    <string name="hours">%1$s ώρες</string>
-    <string name="days">%1$s μέρες</string>
-    <string name="weeks">%1$s εβδομάδες</string>
+    <plurals name="seconds">
+        <item quantity="one">%1$s δευτερόλεπτο</item>
+        <item quantity="other">%1$s δευτερόλεπτα</item>
+    </plurals>
+    <plurals name="minutes">
+        <item quantity="one">%1$s λεπτό</item>
+        <item quantity="other">%1$s λεπτά</item>
+    </plurals>
+    <plurals name="hours">
+        <item quantity="one">%1$s ώρα</item>
+        <item quantity="other">%1$s ώρες</item>
+    </plurals>
+    <plurals name="days">
+        <item quantity="one">%1$s μέρα</item>
+        <item quantity="other">%1$s μέρες</item>
+    </plurals>
+    <plurals name="weeks">
+        <item quantity="one">%1$s εβδομάδα</item>
+        <item quantity="other">%1$s εβδομάδες</item>
+    </plurals>
     <string name="Finished_ago">Τερμάτισε πριν: %1$s</string>
 
     <string name="Find_the_Treasure">Βρείτε το θησαυρό!</string>
@@ -141,5 +157,20 @@
     <string name="Enter_code">Εισάγετε κωδικό</string>
 
     <string name="Scan_a_QR_code">Σαρώστε ένα QR κώδικα</string>
+    <string name="QR_code">QR κώδικας</string>
+
+    <string name="No_Internet">Χωρίς Internet</string>
+    <string name="It_seems_like_you_are_not_connected_to_Internet">Φαίνεται πως δεν είστε συνδεδεμένος στο Internet.</string>
+    <string name="Retry">Δοκίμασε και πάλι</string>
+
+    <string name="URL_detected">Εντοπίστηκε URL</string>
+    <string name="Would_you_like_to_open_this_URL">Θέλετε να ανοίξετε τη σελίδα %1$s</string>
+    <string name="Open_URL">Άνοιξε</string>
+    <string name="Use_as_answer">Χρησιμοποίησε ως απάντηση</string>
+
+    <string name="Inactive_category">Μη ενεργός κατηγορία</string>
+    <string name="The_selected_category_is_not_active_yet">Η επιλεγμένη κατηγορία δεν έχει ενεργοποιηθεί ακόμη. Ξεκινάει σε %1$s.</string>
+    <string name="Try_again">Δοκίμασε ξανά</string>
+    <string name="Wait">Περίμενε</string>
 
 </resources>
