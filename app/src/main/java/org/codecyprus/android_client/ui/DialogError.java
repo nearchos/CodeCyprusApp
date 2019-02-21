@@ -21,13 +21,14 @@ package org.codecyprus.android_client.ui;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
+import android.text.Html;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import org.codecyprus.android_client.R;
+
+import java.util.ArrayList;
 
 /**
  * Date: 7/9/11
@@ -35,9 +36,9 @@ import org.codecyprus.android_client.R;
  */
 public class DialogError extends AlertDialog
 {
-    private final TextView errorTextView;
+    private final ListView errorsListView;
 
-    public DialogError(final Context context)
+    DialogError(final Context context)
     {
         super(context);
 
@@ -45,26 +46,26 @@ public class DialogError extends AlertDialog
         setView(rootView);
 
         setTitle(R.string.Error);
-        errorTextView = (TextView) rootView.findViewById(R.id.dialog_error_message);
+        errorsListView = rootView.findViewById(R.id.dialog_error_messages);
 
-        setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.Dismiss), new OnClickListener()
-        {
-            @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
-                dialog.dismiss();
-            }
-        });
+        setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.Dismiss), (dialog, which) -> dialog.dismiss());
     }
 
-    public DialogError(final Context context, final String message)
+    DialogError(final Context context, final String message)
     {
         this(context);
-        setMessage(message);
+        setMessages(new String [] { message });
     }
 
-    public void setMessage(final String message)
+    DialogError(final Context context, final ArrayList<String> messages) {
+        this(context);
+        setMessages(messages.toArray(new String[messages.size()]));
+    }
+
+    private void setMessages(final String [] messages)
     {
-        errorTextView.setText(message);
+        final ArrayAdapter<String> messagesArrayAdapter =
+                new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, messages);
+        errorsListView.setAdapter(messagesArrayAdapter);
     }
 }

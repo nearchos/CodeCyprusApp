@@ -21,14 +21,8 @@ package org.codecyprus.android_client.ui;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.view.View;
-import android.widget.TextView;
 import org.codecyprus.android_client.R;
-import org.codecyprus.android_client.sync.SyncService;
-
-import java.util.HashMap;
 
 /**
  * Date: 7/9/11
@@ -45,24 +39,14 @@ public class DialogSkip extends AlertDialog
 
         setTitle(R.string.Skip_question);
 
-        setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.Skip), new OnClickListener()
-        {
-            @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
-                skip = true;
-                dialog.dismiss();
-            }
+        setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.Skip), (dialog, which) -> {
+            skip = true;
+            dialog.dismiss();
         });
 
-        setButton(AlertDialog.BUTTON_NEGATIVE, context.getString(R.string.Cancel), new OnClickListener()
-        {
-            @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
-                skip = false;
-                dialog.dismiss();
-            }
+        setButton(AlertDialog.BUTTON_NEGATIVE, context.getString(R.string.Cancel), (dialog, which) -> {
+            skip = false;
+            dialog.dismiss();
         });
     }
 

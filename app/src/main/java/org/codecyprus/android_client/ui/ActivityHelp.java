@@ -24,9 +24,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebView;
+
 import org.codecyprus.android_client.R;
 
 import java.util.Locale;
@@ -35,58 +36,40 @@ import java.util.Locale;
  * @author Nearchos Paspallis
  * 19/12/13.
  */
-public class ActivityHelp extends Activity
-{
+public class ActivityHelp extends Activity {
+
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
 
         final ActionBar actionBar = getActionBar();
         if(actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
 
-        final WebView webView = (WebView) findViewById(R.id.activity_about_webview);
+        final WebView webView = findViewById(R.id.activity_about_webview);
         webView.setBackgroundColor(0x00000000);
 
-        if("ell".equals(Locale.getDefault().getISO3Language()))
-        {
+        if("ell".equals(Locale.getDefault().getISO3Language())) {
             webView.loadUrl("file:///android_asset/about_el.html");
-        }
-        else
-        {
+        } else { // ασσθμε ενγλιση
             webView.loadUrl("file:///android_asset/about_en.html");
         }
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        menu.add(R.string.Website)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        if(item.getItemId() == android.R.id.home)
-        {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home) {
             // Respond to the action bar's Up/Home button
             finish();
             return true;
-        }
-        else if(getString(R.string.Website).equals(item.getTitle()))
-        {
-            final Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(getString(R.string.codecyprus_dot_org_url)));
-            startActivity(intent);
-            return true;
-        }
-        else
-        {
+        } else {
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void visitCodeCyprusWebsite(final View view) {
+        final Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(getString(R.string.codecyprus_dot_org_url)));
+        startActivity(intent);
     }
 }

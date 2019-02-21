@@ -24,7 +24,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
@@ -33,37 +32,39 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
-import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.google.gson.Gson;
+
 import org.codecyprus.android_client.Preferences;
 import org.codecyprus.android_client.R;
 import org.codecyprus.android_client.SerializableSession;
-import org.codecyprus.android_client.model.Category;
-import org.codecyprus.android_client.sync.JsonParseException;
-import org.codecyprus.android_client.sync.JsonParser;
 import org.codecyprus.android_client.sync.SyncService;
-import org.json.JSONException;
+import org.codecyprus.th.model.Replies;
+import org.codecyprus.th.model.TreasureHunt;
 
 import java.util.HashMap;
+import java.util.Vector;
 
 /**
  * @author Nearchos Paspallis
  * Created on 19/12/13.
  */
-public class ActivityCategories extends Activity
+public class ActivityTreasureHunts extends Activity
 {
     public static final String TAG = "codecyprus";
 
-    private final IntentFilter intentFilter = new IntentFilter(SyncService.ACTION_CATEGORIES_COMPLETED);
+    private final IntentFilter intentFilter = new IntentFilter(SyncService.ACTION_LIST_COMPLETED);
     private ProgressReceiver progressReceiver;
 
     private ListView listView;
 
-    private Category [] categories;
+    private Vector<TreasureHunt> treasureHunts = new Vector<>();
 
     private ConnectivityManager connectivityManager = null;
+
+    private Gson gson = new Gson();
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -74,24 +75,16 @@ public class ActivityCategories extends Activity
 
         connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        listView = (ListView) findViewById(R.id.activity_category_list_view);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
-                final Category category = categories[position];
-                final SerializableSession serializableSession = Preferences.getSession(ActivityCategories.this, category.getUUID());
-                if(serializableSession != null)
-                {
-                    new DialogResumeOrClear(ActivityCategories.this, serializableSession, category).show();
-                }
-                else
-                {
-                    final Intent startQuizIntent = new Intent(ActivityCategories.this, ActivityStartQuiz.class);
-                    startQuizIntent.putExtra(ActivityStartQuiz.EXTRA_CATEGORY, category);
-                    startActivity(startQuizIntent);
-                }
+        listView = findViewById(R.id.activity_category_list_view);
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            final TreasureHunt treasureHunt = treasureHunts.elementAt(position);
+            final SerializableSession serializableSession = Preferences.getSession(ActivityTreasureHunts.this, treasureHunt.getUuid());
+            if(serializableSession != null) {
+                new DialogResumeOrClear(ActivityTreasureHunts.this, serializableSession, treasureHunt).show();
+            } else {
+                final Intent startQuizIntent = new Intent(ActivityTreasureHunts.this, ActivityStartQuiz.class);
+                startQuizIntent.putExtra(ActivityStartQuiz.EXTRA_TREASURE_HUNT, treasureHunt);
+                startActivity(startQuizIntent);
             }
         });
 
@@ -102,8 +95,7 @@ public class ActivityCategories extends Activity
     }
 
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
         registerReceiver(progressReceiver, intentFilter);
 
@@ -111,8 +103,7 @@ public class ActivityCategories extends Activity
     }
 
     @Override
-    protected void onPause()
-    {
+    protected void onPause() {
         super.onPause();
         unregisterReceiver(progressReceiver);
     }
@@ -129,18 +120,13 @@ public class ActivityCategories extends Activity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        if(item.getItemId() == android.R.id.home)
-        {
+        if(item.getItemId() == android.R.id.home) {
             finish();
             return true;
-        }
-        else if(getString(R.string.REFRESH).equals(item.getTitle()))
-        {
+        } else if(getString(R.string.REFRESH).equals(item.getTitle())) {
             refresh();
             return true;
-        }
-        else
-        {
+        } else {
             return super.onOptionsItemSelected(item);
         }
     }
@@ -155,28 +141,23 @@ public class ActivityCategories extends Activity
             new AlertDialog.Builder(this)
                     .setTitle(R.string.No_Internet)
                     .setMessage(R.string.It_seems_like_you_are_not_connected_to_Internet)
-                    .setPositiveButton(R.string.Retry, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.dismiss();
-                            tryToConnectAndRefresh();
-                        }
+                    .setPositiveButton(R.string.Retry, (dialog, id) -> {
+                        dialog.dismiss();
+                        tryToConnectAndRefresh();
                     })
-                    .setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.dismiss();
-                            finish();
-                        }
+                    .setNegativeButton(R.string.Cancel, (dialog, id) -> {
+                        dialog.dismiss();
+                        finish();
                     }).create().show();
         }
     }
 
-    private void refresh()
-    {
-        final Intent getCategoriesIntent = new Intent(this, SyncService.class);
-        getCategoriesIntent.setAction(SyncService.ACTION_CATEGORIES);
-        getCategoriesIntent.putExtra(SyncService.EXTRA_PARAMETERS, new HashMap<String, String>());
+    private void refresh() {
+        final Intent getTreasureHuntsIntent = new Intent(this, SyncService.class);
+        getTreasureHuntsIntent.setAction(SyncService.ACTION_LIST);
+        getTreasureHuntsIntent.putExtra(SyncService.EXTRA_PARAMETERS, new HashMap<String, String>());
         setProgressBarIndeterminateVisibility(true);
-        startService(getCategoriesIntent);
+        startService(getTreasureHuntsIntent);
     }
 
     private class ProgressReceiver extends BroadcastReceiver
@@ -186,25 +167,16 @@ public class ActivityCategories extends Activity
             final String payload = (String) intent.getSerializableExtra(SyncService.EXTRA_PAYLOAD);
             setProgressBarIndeterminateVisibility(false);
 
-            if(payload != null)
-            {
-                try
-                {
-                    categories = JsonParser.parseGetActiveCategories(payload);
+            if(payload != null) {
+                final Replies.ListReply listReply = gson.fromJson(payload, Replies.ListReply.class);
+                if(listReply.getStatus().isOk()) {
+                    treasureHunts.clear();
+                    treasureHunts = listReply.getSelectedTreasureHunts();
+                }
 
-                    // update the UI
-                    listView.setAdapter(new CategoriesAdapter(ActivityCategories.this, categories));
-                }
-                catch (JsonParseException jsonpe)
-                {
-                    Log.e(TAG, jsonpe.getMessage());
-                    new DialogError(context, jsonpe.getMessage()).show();
-                }
-                catch (JSONException jsone)
-                {
-                    Log.e(TAG, jsone.getMessage());
-                    new DialogError(context, jsone.getMessage()).show();
-                }
+                // update the UI
+                Log.d(TAG, "Treasure hunts: " + treasureHunts);
+                listView.setAdapter(new TreasureHuntsAdapter(ActivityTreasureHunts.this, treasureHunts));
             }
         }
     }

@@ -20,67 +20,61 @@
 package org.codecyprus.android_client.ui;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import org.codecyprus.android_client.Preferences;
 import org.codecyprus.android_client.R;
-import org.codecyprus.android_client.SerializableSession;
-import org.codecyprus.android_client.model.Category;
-import org.codecyprus.android_client.model.ScoreEntry;
+import org.codecyprus.th.model.Replies;
 
-import java.util.Date;
+import java.util.Locale;
 import java.util.Vector;
 
 /**
  * @author Nearchos Paspallis
  * 24/12/13
  */
-public class ScoreEntriesAdapter extends ArrayAdapter<ScoreEntry>
+public class LeaderboardEntriesAdapter extends ArrayAdapter<Replies.LeaderboardEntry>
 {
     public static final String TAG = "codecyprus";
 
     private final LayoutInflater layoutInflater;
 
-    public ScoreEntriesAdapter(final Context context, final Vector<ScoreEntry> scoreEntries)
+    public LeaderboardEntriesAdapter(final Context context, final Vector<Replies.LeaderboardEntry> scoreEntries)
     {
         super(context, R.layout.list_item_score_entry, scoreEntries);
 
         this.layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    @Override public View getView(final int position, final View convertView, final ViewGroup parent)
-    {
-        final View view = convertView != null ? convertView : layoutInflater.inflate(R.layout.list_item_score_entry, null);
+    @Override public View getView(final int position, final View convertView, final ViewGroup parent) {
+        final View view = convertView != null ? convertView : layoutInflater.inflate(R.layout.list_item_score_entry, null); // todo fix suing standard pattern for recycler view
 
-        final ScoreEntry scoreEntry = getItem(position);
+        final Replies.LeaderboardEntry leaderboardEntry = getItem(position);
 
         // Creates a ViewHolder and store references to the two children views we want to bind data to.
         assert view != null;
-        final TextView playerName = (TextView) view.findViewById(R.id.list_item_score_entry_player_name);
-        final TextView score = (TextView) view.findViewById(R.id.list_item_score_entry_score);
-        final TextView finishTimeTextView = (TextView) view.findViewById(R.id.list_item_score_entry_finish_time);
+        final TextView playerName = view.findViewById(R.id.list_item_score_entry_player_name);
+        final TextView score = view.findViewById(R.id.list_item_score_entry_score);
+        final TextView finishTimeTextView = view.findViewById(R.id.list_item_score_entry_finish_time);
+
+        assert leaderboardEntry != null;
 
         // Bind the data efficiently with the holder.
-        playerName.setText(scoreEntry.getPlayerName());
-        score.setText(Integer.toString(scoreEntry.getScore()));
-        final long finishTime = scoreEntry.getFinishTime();
-        if(finishTime > 0)
-        {
-            finishTimeTextView.setText(getContext().getString(R.string.Finished_in, timeInText(finishTime)));
-        }
-        else
-        {
+        playerName.setText(leaderboardEntry.getPlayer());
+        score.setText(String.format(Locale.US, "%d", leaderboardEntry.getScore()));
+        final long completionTime = leaderboardEntry.getCompletionTime();
+        if(completionTime > 0) {
+            finishTimeTextView.setText(getContext().getString(R.string.Finished_in, timeInText(completionTime)));
+        } else {
             finishTimeTextView.setText(getContext().getString(R.string.Not_finished_yet));
         }
 
         return view;
     }
 
-    static String timeInText(final long duration)
+    private static String timeInText(final long duration)
     {
         long SECOND = 1000L;
         long MINUTE = 60 * SECOND;

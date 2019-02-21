@@ -30,6 +30,7 @@
             android:text="@string/Lets_get_started"
             android:textStyle="bold"
             android:drawableRight="@drawable/ic_media_embed_play"
+            android:drawableEnd="@drawable/ic_media_embed_play"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="@dimen/button_start_height"/>
@@ -39,6 +40,7 @@
             android:src="@drawable/pirate_android_small"
             android:contentDescription="@string/Android_pirate"
             android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_margin="16dp"
             android:layout_above="@id/activity_home_button_start"
             android:layout_width="wrap_content"

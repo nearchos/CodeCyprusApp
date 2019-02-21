@@ -24,7 +24,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import org.codecyprus.android_client.R;
 
 public class ActivityHome extends Activity
@@ -37,11 +36,7 @@ public class ActivityHome extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        findViewById(R.id.activity_home_button_start).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                startActivity(new Intent(ActivityHome.this, ActivityCategories.class));
-            }
-        });
+        findViewById(R.id.activity_home_button_start).setOnClickListener(v -> startActivity(new Intent(ActivityHome.this, ActivityTreasureHunts.class)));
     }
 
     @Override

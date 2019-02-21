@@ -18,66 +18,27 @@
   ~ along with Code Cyprus App. If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:background="@drawable/app_background"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/app_background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <WebView xmlns:android="http://schemas.android.com/apk/res/android"
-             android:id="@+id/activity_about_webview"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"/>
+    <Button
+        android:id="@+id/activity_about_button_open_website"
+        android:onClick="visitCodeCyprusWebsite"
+        android:text="@string/codecyprus_dot_org_url"
+        android:textColor="@color/pirate_red"
+        android:drawableRight="@drawable/baseline_open_in_new_24"
+        android:drawableEnd="@drawable/baseline_open_in_new_24"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-</LinearLayout>
+    <WebView
+        android:id="@+id/activity_about_webview"
+        android:layout_above="@id/activity_about_button_open_website"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
-        <!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
-            <!--android:background="@drawable/app_background"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent">-->
-
-    <!--<LinearLayout android:orientation="vertical"-->
-                  <!--android:padding="16dp"-->
-                  <!--android:background="@color/semitransparent_white"-->
-                  <!--android:layout_width="match_parent"-->
-                  <!--android:layout_height="match_parent">-->
-
-        <!--<TextView-->
-                <!--android:text="@string/about_p1"-->
-                <!--android:textSize="@dimen/text_size"-->
-                <!--android:layout_width="fill_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--/>-->
-
-        <!--<TextView-->
-                <!--android:text="@string/about_p2"-->
-                <!--android:textSize="@dimen/text_size"-->
-                <!--android:layout_marginTop="16dp"-->
-                <!--android:layout_width="fill_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--/>-->
-
-        <!--<Button-->
-                <!--android:text="@string/codecyprus_dot_org_url"-->
-                <!--android:textSize="@dimen/text_size"-->
-                <!--android:layout_marginTop="16dp"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"/>-->
-        <!--<TextView-->
-                <!--android:text="@string/about_p3"-->
-                <!--android:textSize="@dimen/text_size"-->
-                <!--android:layout_marginTop="16dp"-->
-                <!--android:layout_width="fill_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--/>-->
-
-        <!--<Button-->
-                <!--android:text="@string/aspectsense_dot_com_url"-->
-                <!--android:textSize="@dimen/text_size"-->
-                <!--android:layout_marginTop="16dp"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"/>-->
-
-
-    <!--</LinearLayout>-->
-
-<!--</ScrollView>-->
+</RelativeLayout>

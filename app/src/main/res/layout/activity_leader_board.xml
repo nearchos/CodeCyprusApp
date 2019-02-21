@@ -25,6 +25,17 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/activity_leader_board_prize"
+        android:text="@string/Click_to_claim_your_prize"
+        android:onClick="showQRCode"
+        android:drawableRight="@drawable/ic_qrcode_black_48dp"
+        android:drawableEnd="@drawable/ic_qrcode_black_48dp"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <LinearLayout
             android:layout_margin="8dp"
             android:layout_width="match_parent"
@@ -34,16 +45,30 @@
                 android:src="@drawable/pirate_android_smaller"
                 android:contentDescription="@string/Android_pirate"
                 android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
-        <TextView
-                android:id="@+id/activity_score_board_title"
+        <LinearLayout
+            android:background="@drawable/popup_inline"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
                 android:text="@string/Score_board"
                 android:textSize="@dimen/text_size"
-                android:background="@drawable/popup_inline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/activity_leader_board_name"
+                android:text="@string/Name"
+                android:textSize="@dimen/text_small_size"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

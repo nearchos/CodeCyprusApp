@@ -43,6 +43,7 @@
             <LinearLayout
                     android:orientation="vertical"
                     android:layout_marginLeft="4dp"
+                    android:layout_marginStart="4dp"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent">
 
@@ -87,7 +88,7 @@
             <TextView
                     android:text="@string/about_aspectsense"
                     android:textSize="@dimen/text_small_size"
-                    android:gravity="right"
+                    android:gravity="end"
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
                     android:layout_width="wrap_content"

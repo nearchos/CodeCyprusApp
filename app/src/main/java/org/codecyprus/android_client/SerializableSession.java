@@ -35,7 +35,7 @@ public class SerializableSession implements Serializable
 
     private final String categoryUUID;
     private final String categoryName;
-    private final String locationUUID;
+    private final String locationUUID; // todo delete
     private final String sessionUUID;
     private final String teamName;
     private final String teamEmail;

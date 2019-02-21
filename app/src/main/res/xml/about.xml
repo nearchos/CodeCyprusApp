@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <PreferenceCategory
+        android:title="@string/About"/>
+
     <Preference
         android:title="@string/app_name"
         android:icon="@drawable/ic_launcher"
@@ -20,6 +23,9 @@
         android:icon="@drawable/ic_share_black_24dp"
         android:title="@string/Tell_the_world"
         android:summary="@string/Share_with_your_friends"/>
+
+    <PreferenceCategory
+        android:title="@string/Technical"/>
 
     <Preference
         android:icon="@drawable/ic_build_black_24dp"

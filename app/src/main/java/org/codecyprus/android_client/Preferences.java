@@ -36,22 +36,22 @@ public class Preferences
 {
     public static final String TAG = "org.codecyprus.android_client.Preferences";
 
-    public static final String SHARED_PREFERENCES_FILE = "shared_preferences";
+    private static final String SHARED_PREFERENCES_FILE = "shared_preferences";
 
     static private SharedPreferences getSharedPreferences(final Context context)
     {
         return context.getSharedPreferences(SHARED_PREFERENCES_FILE, MODE_PRIVATE);
     }
 
-    public static final String SESSION_KEYS = "session_keys";
+    private static final String SESSION_KEYS = "session_keys";
 
     static public Set<SerializableSession> getAllSessions(final Context context)
     {
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
-        final Set<String> jsonSessions = sharedPreferences.getStringSet(SESSION_KEYS, new HashSet<String>());
+        final Set<String> jsonSessions = sharedPreferences.getStringSet(SESSION_KEYS, new HashSet<>());
 
-        final Set<SerializableSession> allSessions = new HashSet<SerializableSession>();
+        final Set<SerializableSession> allSessions = new HashSet<>();
         for(final String jsonSession : jsonSessions) {
             final SerializableSession serializableSession = SerializableSession.fromJSON(jsonSession);
             allSessions.add(serializableSession);
@@ -65,13 +65,13 @@ public class Preferences
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         final SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
 
-        final Set<String> jsonSessions = sharedPreferences.getStringSet(SESSION_KEYS, new HashSet<String>());
+        final Set<String> jsonSessions = sharedPreferences.getStringSet(SESSION_KEYS, new HashSet<>());
         jsonSessions.add(serializableSession.getCategoryUUID());
 
         sharedPreferencesEditor.putString(serializableSession.getCategoryUUID(), SerializableSession.toJSON(serializableSession));
 
         sharedPreferencesEditor.putStringSet(SESSION_KEYS, jsonSessions);
-        sharedPreferencesEditor.commit();
+        sharedPreferencesEditor.apply();
     }
 
     static public void clearActiveSession(final Context context)
@@ -82,7 +82,7 @@ public class Preferences
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         final SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
         sharedPreferencesEditor.putString(ACTIVE_SESSION, null);
-        sharedPreferencesEditor.commit();
+        sharedPreferencesEditor.apply();
     }
 
     static public void clearSession(final Context context, final SerializableSession serializableSession)
@@ -90,13 +90,13 @@ public class Preferences
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         final SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
 
-        final Set<String> jsonSessions = sharedPreferences.getStringSet(SESSION_KEYS, new HashSet<String>());
+        final Set<String> jsonSessions = sharedPreferences.getStringSet(SESSION_KEYS, new HashSet<>());
         jsonSessions.remove(serializableSession.getCategoryUUID());
 
         sharedPreferencesEditor.remove(serializableSession.getCategoryUUID());
 
         sharedPreferencesEditor.putStringSet(SESSION_KEYS, jsonSessions);
-        sharedPreferencesEditor.commit();
+        sharedPreferencesEditor.apply();
     }
 
     static public SerializableSession getSession(final Context context, final String categoryUUID)
@@ -125,6 +125,6 @@ public class Preferences
         final SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
 
         sharedPreferencesEditor.putString(ACTIVE_SESSION, SerializableSession.toJSON(serializableSession));
-        sharedPreferencesEditor.commit();
+        sharedPreferencesEditor.apply();
     }
 }

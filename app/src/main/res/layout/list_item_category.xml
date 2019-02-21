@@ -19,59 +19,54 @@
   ~ along with Code Cyprus App. If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:paddingTop="12dp"
-              android:paddingBottom="12dp"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="12dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-    <RelativeLayout
+    <ImageView
+            android:id="@+id/list_item_category_play_button"
+            android:contentDescription="@string/Select_a_category"
+            android:src="@drawable/ic_media_embed_play"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:id="@+id/list_item_category_name"
+            android:text="@string/Select_a_category"
+            android:textSize="@dimen/text_size"
+            android:textColor="@color/pirate_red"
+            android:textStyle="bold"
+            android:layout_toLeftOf="@id/list_item_category_play_button"
+            android:layout_toStartOf="@id/list_item_category_play_button"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"/>
 
-        <ImageView
-                android:id="@+id/list_item_category_play_button"
-                android:contentDescription="@string/Select_a_category"
-                android:src="@drawable/ic_media_embed_play"
-                android:layout_alignParentRight="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+    <TextView
+            android:id="@+id/list_item_category_active"
+            android:text="@string/ACTIVE_SESSION"
+            android:textSize="@dimen/text_small_size"
+            android:textColor="@color/pirate_green"
+            android:textStyle="bold"
+            android:layout_toLeftOf="@id/list_item_category_play_button"
+            android:layout_toStartOf="@id/list_item_category_play_button"
+            android:layout_below="@id/list_item_category_name"
+            android:layout_marginTop="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
-        <TextView
-                android:id="@+id/list_item_category_name"
-                android:text="@string/Select_a_category"
-                android:textSize="@dimen/text_size"
-                android:textColor="@color/pirate_red"
-                android:textStyle="bold"
-                android:layout_toLeftOf="@id/list_item_category_play_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+    <TextView
+            android:id="@+id/list_item_category_valid_date_and_time"
+            android:text="@string/placeholder"
+            android:textSize="@dimen/text_small_size"
+            android:textColor="@color/dark_gray"
+            android:gravity="start"
+            android:layout_below="@id/list_item_category_active"
+            android:layout_marginTop="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
-        <TextView
-                android:id="@+id/list_item_category_active"
-                android:text="@string/ACTIVE_SESSION"
-                android:textSize="@dimen/text_small_size"
-                android:textColor="@color/pirate_green"
-                android:textStyle="bold"
-                android:layout_toLeftOf="@id/list_item_category_play_button"
-                android:layout_toStartOf="@id/list_item_category_play_button"
-                android:layout_below="@id/list_item_category_name"
-                android:layout_marginTop="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-        <TextView
-                android:id="@+id/list_item_category_valid_date_and_time"
-                android:text="@string/placeholder"
-                android:textSize="@dimen/text_small_size"
-                android:textColor="@color/dark_gray"
-                android:gravity="start"
-                android:layout_below="@id/list_item_category_active"
-                android:layout_marginTop="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-    </RelativeLayout>
-
-</LinearLayout>
+</RelativeLayout>

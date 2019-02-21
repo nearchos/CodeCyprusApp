@@ -133,6 +133,7 @@
     <string name="Skipped_finished">Skipped, finished!</string>
     <string name="Loading">Loading …</string>
     <string name="Requires_location">Requires location!</string>
+    <string name="Cannot_be_skipped">Cannot be skipped!</string>
     <string name="A">A</string>
     <string name="B">B</string>
     <string name="C">C</string>
@@ -140,6 +141,7 @@
     <string name="Invalid_session">Invalid session!</string>
     <string name="Invalid_empty_answer">Invalid empty answer</string>
     <string name="Incorrect">Incorrect</string>
+    <string name="Incorrect_msg">Incorrect: %1$s</string>
     <string name="Unknown_or_incorrect_location">Unknown or incorrect location</string>
     <string name="Correct">Correct!</string>
     <string name="Correct_finished">Correct, finished!</string>
@@ -149,6 +151,7 @@
     <string name="Help">Help</string>
     <string name="ABOUT">ABOUT</string>
     <string name="About">About</string>
+    <string name="Technical">Technical</string>
     <string name="Error">Error</string>
     <string name="Resume_or_clear">Resume or clear?</string>
     <string name="about_p1">Thank you for visiting Code Cyprus, a non-profit project aiming at inspiring high school students to take interest in computer science, in Cyprus and beyond.</string>
@@ -179,5 +182,15 @@
     <string name="The_selected_category_is_not_active_yet">The selected category is not active yet. It starts in %1$s.</string>
     <string name="Try_again">Try again</string>
     <string name="Wait">Wait</string>
+
+    <string name="True">True</string>
+    <string name="False">False</string>
+    <string name="Click_to_claim_your_prize">Click to claim your prize!</string>
+    <string name="Claim_your_prize_by_scanning_this_code_back_at_the_main_desk">Claim your prize by scanning this code back at the main desk</string>
+    <string name="You_have_not_answered_enough_questions_correctly">You have not answered enough questions correctly</string>
+    <string name="You_must_attempt_all_questions_first">You must attempt all questions first</string>
+
+    <string name="permission_denied_explanation">Permission denied so location is not used!</string>
+    <string name="permission_rationale">The location permission is required so that location-sensitive questions can be answered!</string>
 
 </resources>

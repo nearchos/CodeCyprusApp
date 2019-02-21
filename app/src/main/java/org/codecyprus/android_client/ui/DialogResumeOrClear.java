@@ -21,14 +21,13 @@ package org.codecyprus.android_client.ui;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 import org.codecyprus.android_client.Preferences;
 import org.codecyprus.android_client.R;
 import org.codecyprus.android_client.SerializableSession;
-import org.codecyprus.android_client.model.Category;
+import org.codecyprus.th.model.TreasureHunt;
 
 /**
  * Date: 7/9/11
@@ -38,8 +37,7 @@ public class DialogResumeOrClear extends AlertDialog
 {
     public static final String TAG = "codecyprus";
 
-    public DialogResumeOrClear(final Context context, final SerializableSession serializableSession, final Category category)
-    {
+    public DialogResumeOrClear(final Context context, final SerializableSession serializableSession, final TreasureHunt treasureHunt) {
         super(context);
 
         final View rootView = View.inflate(context, R.layout.fragment_dialog_resume_or_clear, null);
@@ -47,43 +45,26 @@ public class DialogResumeOrClear extends AlertDialog
 
         setTitle(R.string.Resume_or_clear);
 
-        final TextView messageTextView = (TextView) rootView.findViewById(R.id.dialog_resume_or_clear_message);
+        final TextView messageTextView = rootView.findViewById(R.id.dialog_resume_or_clear_message);
         messageTextView.setText(context.getString(R.string.Resume_or_clear_message, serializableSession.getCategoryName()));
 
-        setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.Resume), new OnClickListener()
-        {
-            @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
-                // resume
-                Preferences.setActiveSession(context, serializableSession);
-                final Intent continueQuizIntent = new Intent(context, ActivityCurrentQuestion.class);
-                context.startActivity(continueQuizIntent);
-                dismiss();
-            }
+        setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.Resume), (dialog, which) -> {
+            // resume
+            Preferences.setActiveSession(context, serializableSession);
+            final Intent continueQuizIntent = new Intent(context, ActivityQuestion.class);
+            context.startActivity(continueQuizIntent);
+            dismiss();
         });
 
-        setButton(AlertDialog.BUTTON_NEGATIVE, context.getString(R.string.Start_new), new OnClickListener()
-        {
-            @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
-                // start new
-                Preferences.clearSession(context, serializableSession);
-                final Intent startQuizIntent = new Intent(context, ActivityStartQuiz.class);
-                startQuizIntent.putExtra(ActivityStartQuiz.EXTRA_CATEGORY, category);
-                context.startActivity(startQuizIntent);
-                dismiss();
-            }
+        setButton(AlertDialog.BUTTON_NEGATIVE, context.getString(R.string.Start_new), (dialog, which) -> {
+            // start new
+            Preferences.clearSession(context, serializableSession);
+            final Intent startQuizIntent = new Intent(context, ActivityStartQuiz.class);
+            startQuizIntent.putExtra(ActivityStartQuiz.EXTRA_TREASURE_HUNT, treasureHunt);
+            context.startActivity(startQuizIntent);
+            dismiss();
         });
 
-        setButton(AlertDialog.BUTTON_NEUTRAL, context.getString(R.string.Cancel), new OnClickListener()
-        {
-            @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
-                dialog.dismiss();
-            }
-        });
+        setButton(AlertDialog.BUTTON_NEUTRAL, context.getString(R.string.Cancel), (dialog, which) -> dialog.dismiss());
     }
 }
