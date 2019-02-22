@@ -183,7 +183,11 @@
     <string name="You_have_not_answered_enough_questions_correctly">Δεν απαντήσατε αρκετές ερωτήσεις σωστά</string>
     <string name="You_must_attempt_all_questions_first">Πρέπει να απαντήσετε σε όλες τις ερωτήσεις πρώτα</string>
 
-    <string name="permission_denied_explanation">Μη έγκριση χρήσης τοποθεσίας και για αυτό μη ενεργοποίηση τοποθεσίας!</string>
-    <string name="permission_rationale">Η έγκριση της χρήσης τοποθεσίας είναι απαραίτητη έτσι ώστε να μπορείτε να απαντάται ερωτήσεις που απαιτούν χρήση τοποθεσίας!</string>
+    <string name="Acquired">Λήφθηκε</string>
+    <plurals name="Acquired_time">
+        <item quantity="zero">Λήφθηκε τώρα</item>
+        <item quantity="one">Λήφθηκε πριν %1$s\'</item>
+        <item quantity="other">Λήφθηκε πριν %1$s\'</item>
+    </plurals>
 
 </resources>

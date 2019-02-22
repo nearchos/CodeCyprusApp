@@ -21,75 +21,101 @@
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:background="@drawable/app_background"
-            android:paddingTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
     <LinearLayout
             android:orientation="vertical"
-            android:padding="8dp"
+            android:padding="4dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <ImageView
-                    android:src="@drawable/pirate_android_smaller"
-                    android:contentDescription="@string/Android_pirate"
-                    android:layout_margin="12dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                android:id="@+id/activity_current_question_pirate_image_view"
+                android:src="@drawable/pirate_android_smaller"
+                android:contentDescription="@string/Android_pirate"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
-            <LinearLayout
-                    android:orientation="vertical"
-                    android:background="@drawable/popup_inline"
-                    android:padding="16dp"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
-
-                <WebView
-                        android:id="@+id/activity_current_question_question"
-                        android:text="@string/Loading"
-                        android:textSize="@dimen/text_size"
-android:background="#000"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                <TextView
-                        android:id="@+id/activity_current_question_requires_location"
-                        android:text="@string/Requires_location"
-                        android:textSize="@dimen/text_size"
-                        android:textColor="@color/green"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                <TextView
-                        android:id="@+id/activity_current_question_cannot_be_skipped"
-                        android:text="@string/Cannot_be_skipped"
-                        android:textSize="@dimen/text_size"
-                        android:textColor="@color/green"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <TextView
+            <TextView
                 android:id="@+id/activity_current_question_feedback"
                 android:text="@string/Feedback"
                 android:textColor="@color/red"
                 android:textSize="@dimen/text_size"
-                android:padding="8dp"
-                android:layout_marginTop="8dp"
+                android:padding="4dp"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@id/activity_current_question_pirate_image_view"
+                android:layout_toEndOf="@id/activity_current_question_pirate_image_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:id="@+id/activity_current_question_requires_location"
+                android:padding="4dp"
+                android:layout_below="@id/activity_current_question_feedback"
+                android:layout_toRightOf="@id/activity_current_question_pirate_image_view"
+                android:layout_toEndOf="@id/activity_current_question_pirate_image_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="@string/Requires_location"
+                    android:textSize="@dimen/text_size"
+                    android:textColor="@color/green"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <CheckBox
+                    android:id="@+id/activity_current_question_requires_location_check_box"
+                    android:text="@string/Acquired"
+                    android:textSize="@dimen/text_small_size"
+                    android:checked="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <ProgressBar
+                    android:id="@+id/activity_current_question_requires_location_progress_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/activity_current_question_cannot_be_skipped"
+                android:text="@string/Cannot_be_skipped"
+                android:textSize="@dimen/text_size"
+                android:textColor="@color/green"
+                android:padding="4dp"
+                android:layout_below="@id/activity_current_question_requires_location"
+                android:layout_toRightOf="@id/activity_current_question_pirate_image_view"
+                android:layout_toEndOf="@id/activity_current_question_pirate_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:background="@drawable/popup_inline"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <WebView
+                android:id="@+id/activity_current_question_question"
+                android:text="@string/Loading"
+                android:textSize="@dimen/text_size"
+                android:background="#000"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
 
         <LinearLayout
                 android:id="@+id/activity_current_question_mcq_buttons"

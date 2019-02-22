@@ -189,8 +189,10 @@
     <string name="Claim_your_prize_by_scanning_this_code_back_at_the_main_desk">Claim your prize by scanning this code back at the main desk</string>
     <string name="You_have_not_answered_enough_questions_correctly">You have not answered enough questions correctly</string>
     <string name="You_must_attempt_all_questions_first">You must attempt all questions first</string>
-
-    <string name="permission_denied_explanation">Permission denied so location is not used!</string>
-    <string name="permission_rationale">The location permission is required so that location-sensitive questions can be answered!</string>
+    <string name="Acquired">Acquired</string>
+    <plurals name="Acquired_time">
+        <item quantity="zero">Acquired now</item>
+        <item quantity="other">Acquired %1$s\' ago</item>
+    </plurals>
 
 </resources>
