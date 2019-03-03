@@ -1,13 +1,12 @@
 package org.codecyprus.android_client.ui;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MenuItem;
@@ -29,7 +28,7 @@ import org.codecyprus.th.model.Status;
 
 import java.util.HashMap;
 
-public class ActivityGenerateQRCode extends Activity {
+public class ActivityGenerateQRCode extends AppCompatActivity {
 
     public static final String TAG = "codecyprus";
 
@@ -56,7 +55,7 @@ public class ActivityGenerateQRCode extends Activity {
 
         this.imageView = findViewById(R.id.activity_generate_qr_code_image_view);
 
-        final ActionBar actionBar = getActionBar();
+        final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
 
         progressReceiver = new ProgressReceiver();

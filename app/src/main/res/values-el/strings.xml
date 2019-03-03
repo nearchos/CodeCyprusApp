@@ -72,9 +72,11 @@
 
     <string name="ACTIVE">ΕΝΕΡΓΟ</string>
     <string name="ACTIVE_SESSION">ΑΠΟΘΗΚΕΥΜΕΝΟ</string>
+    <string name="ACTIVE_SESSION_with_team_name">ΑΠΟΘΗΚΕΥΜΕΝΟ (%1$s)</string>
 
     <string name="REFRESH">ΑΝΑΝΕΩΣΗ</string>
-    <string name="ENTER_CODE">Εισάγετε κωδικό</string>
+    <string name="Admin_access">Πρόσβαση διαχειριστή</string>
+    <string name="Show">Εμφάνιση</string>
     <string name="First_select_a_treasure_hunt_to_join">Πρώτα επιλέξτε ένα θησαυρό για να κυνηγήσετε!</string>
     <string name="Valid_until">Έγκυρο μέχρι: %1$s</string>
     <string name="Valid_from_until">Έγκυρο από: %1$s μέχρι: %2$s</string>
@@ -120,6 +122,7 @@
     <string name="Answer_here">Απαντήστε εδώ …</string>
     <string name="Score_is">Το σκορ είναι: %1$d </string>
     <string name="Score">Σκορ: %1$d </string>
+    <string name="Score_and_Team">Score: %1$d (%2$s)</string>
     <string name="SKIP">ΠΡΟΣΠΕΡΑΣΤΕ</string>
     <string name="Skip">Προσπεράστε</string>
     <string name="Skipped_has_more_questions">Προσπεραστηκε, υπάρχουν άλλες ερωτήσεις…</string>
@@ -157,7 +160,7 @@
     <string name="Not_finished_yet">Ακόμη να τερματίσει</string>
     <string name="OK">ΟΚ</string>
     <string name="Refresh">Ανανέωση</string>
-    <string name="Enter_code">Εισάγετε κωδικό</string>
+    <string name="Enter_admin_code">Εισάγετε admin κωδικό</string>
 
     <string name="Scan_a_QR_code">Σαρώστε ένα QR κώδικα</string>
     <string name="QR_code">QR κώδικας</string>

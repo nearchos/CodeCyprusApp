@@ -10,6 +10,9 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.app.ActionBar;
 import android.preference.PreferenceFragment;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import org.codecyprus.android_client.BuildConfig;
@@ -17,11 +20,12 @@ import org.codecyprus.android_client.R;
 
 import java.util.List;
 
-public class ActivityAbout extends PreferenceActivity {
+public class ActivityAbout extends AppCompatPreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         final ActionBar actionBar = getActionBar();
         if (actionBar != null) {
             // Show the Up button in the action bar.

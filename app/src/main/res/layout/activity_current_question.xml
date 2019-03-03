@@ -49,7 +49,7 @@
                 android:id="@+id/activity_current_question_feedback"
                 android:text="@string/Feedback"
                 android:textColor="@color/red"
-                android:textSize="@dimen/text_size"
+                android:textSize="@dimen/text_small_size"
                 android:padding="4dp"
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@id/activity_current_question_pirate_image_view"
@@ -68,7 +68,7 @@
 
                 <TextView
                     android:text="@string/Requires_location"
-                    android:textSize="@dimen/text_size"
+                    android:textSize="@dimen/text_small_size"
                     android:textColor="@color/green"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -78,6 +78,8 @@
                     android:text="@string/Acquired"
                     android:textSize="@dimen/text_small_size"
                     android:checked="true"
+                    android:focusable="false"
+                    android:clickable="false"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -91,7 +93,7 @@
             <TextView
                 android:id="@+id/activity_current_question_cannot_be_skipped"
                 android:text="@string/Cannot_be_skipped"
-                android:textSize="@dimen/text_size"
+                android:textSize="@dimen/text_small_size"
                 android:textColor="@color/green"
                 android:padding="4dp"
                 android:layout_below="@id/activity_current_question_requires_location"

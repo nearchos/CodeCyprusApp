@@ -29,6 +29,7 @@
         android:id="@+id/activity_leader_board_prize"
         android:text="@string/Click_to_claim_your_prize"
         android:onClick="showQRCode"
+        android:visibility="gone"
         android:drawableRight="@drawable/ic_qrcode_black_48dp"
         android:drawableEnd="@drawable/ic_qrcode_black_48dp"
         android:layout_gravity="center"
@@ -58,13 +59,16 @@
             <TextView
                 android:text="@string/Score_board"
                 android:textSize="@dimen/text_size"
+                android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
             <TextView
                 android:id="@+id/activity_leader_board_name"
                 android:text="@string/Name"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/text_small_size"
+                android:textStyle="italic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

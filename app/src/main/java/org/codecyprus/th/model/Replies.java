@@ -213,14 +213,16 @@ public class Replies {
         private int numOfPlayers;
         private boolean sorted;
         private int limit;
+        private boolean hasPrize;
         private Vector<LeaderboardEntry> leaderboard;
         private String treasureHuntName;
 
-        public LeaderboardReply(final boolean sorted, final int limit, final Vector<Session> sessions, final String treasureHuntName) {
+        public LeaderboardReply(final boolean sorted, final int limit, final boolean hasPrize, final Vector<Session> sessions, final String treasureHuntName) {
             super(Status.OK);
             this.numOfPlayers = sessions.size();
             this.sorted = sorted;
             this.limit = limit;
+            this.hasPrize = hasPrize;
             this.leaderboard = new Vector<>();
             this.treasureHuntName = treasureHuntName;
 
@@ -249,6 +251,10 @@ public class Replies {
 
         public int getLimit() {
             return limit;
+        }
+
+        public boolean isHasPrize() {
+            return hasPrize;
         }
 
         public Vector<LeaderboardEntry> getLeaderboard() {

@@ -22,7 +22,6 @@ package org.codecyprus.android_client.ui;
 import android.Manifest;
 import android.accounts.Account;
 import android.accounts.AccountManager;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.*;
 import android.content.pm.PackageManager;
@@ -32,6 +31,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -57,7 +57,7 @@ import java.util.HashMap;
 /**
  * @author Nearchos Paspallis on 23/12/13.
  */
-public class ActivityStartQuiz extends Activity {
+public class ActivityStartQuiz extends AppCompatActivity {
 
     public static final String TAG = "codecyprus";
 
@@ -171,37 +171,22 @@ public class ActivityStartQuiz extends Activity {
     }
 
     private void enterCode() {
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-        alert.setTitle(R.string.Enter_code);
-
-        // Set an EditText view to get user input
-        final EditText input = new EditText(this);
-        alert.setView(input);
-
-        alert.setPositiveButton(R.string.OK, (dialog, whichButton) -> {
-            code = input.getText().toString();
-            PreferenceManager.getDefaultSharedPreferences(ActivityStartQuiz.this).edit().putString("code", code).apply();
+        new DialogEnterAdminCode(this, code -> {
             // try to connect bypassing non-started categories
             final String errorMessage = validateUserInput();
             if(!errorMessage.isEmpty()) {
-                startQuizButton.setEnabled(true);
                 Toast.makeText(ActivityStartQuiz.this, errorMessage, Toast.LENGTH_SHORT).show();
             } else {
+                PreferenceManager.getDefaultSharedPreferences(ActivityStartQuiz.this).edit().putString("code", code).apply();
                 uploadStartQuizRequest();
             }
-        });
-
-        alert.setNegativeButton("Cancel", (dialog, whichButton) -> {
-            // Canceled.
-        });
-
-        alert.show();
+        }).show();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(R.string.ENTER_CODE)
+        menu.add(R.string.Admin_access)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
 
         return true;
@@ -213,7 +198,7 @@ public class ActivityStartQuiz extends Activity {
         {
             finish();
             return true;
-        } else if(getString(R.string.ENTER_CODE).equals(item.getTitle())) {
+        } else if(getString(R.string.Admin_access).equals(item.getTitle().toString())) {
             enterCode();
             return true;
         } else {

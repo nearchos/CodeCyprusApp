@@ -76,11 +76,12 @@
 
     <string name="ACTIVE">ACTIVE</string>
     <string name="ACTIVE_SESSION">ACTIVE SESSION</string>
+    <string name="ACTIVE_SESSION_with_team_name">ACTIVE SESSION (%1$s)</string>
 
     <string name="REFRESH">REFRESH</string>
     <string name="Refresh">Refresh</string>
     <string name="OK">OK</string>
-    <string name="Enter_code">Enter code</string>
+    <string name="Enter_admin_code">Enter admin code</string>
     <string name="First_select_a_treasure_hunt_to_join">First select a treasure to hunt!</string>
     <string name="Valid_until">Valid until: %1$s</string>
     <string name="Valid_from_until">Valid from: %1$s until: %2$s</string>
@@ -127,6 +128,7 @@
     <string name="Answer_here">Answer here …</string>
     <string name="Score_is">Score is: %1$d </string>
     <string name="Score">Score: %1$d </string>
+    <string name="Score_and_Team">Score: %1$d (%2$s)</string>
     <string name="SKIP">SKIP</string>
     <string name="Skip">Skip</string>
     <string name="Skipped_has_more_questions">Skipped, has more questions…</string>
@@ -162,7 +164,8 @@
     <string name="Location">Location</string>
     <string name="Finished_in">Finished in: %1$s</string>
     <string name="Not_finished_yet">Not finished yet</string>
-    <string name="ENTER_CODE">Enter code</string>
+    <string name="Admin_access">Admin access</string>
+    <string name="Show">Show</string>
     <string name="placeholder" translatable="false">placeholder</string>
 
     <string name="Feedback" translatable="false">Feedback</string>

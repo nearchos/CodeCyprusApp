@@ -25,8 +25,8 @@ android {
         applicationId "org.codecyprus.android_client"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 13
-        versionName "2.2.0-" + versionCode + " built on " + getDate()
+        versionCode 14
+        versionName "2.3.0-" + versionCode + " built on " + getDate()
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }

@@ -21,6 +21,7 @@ package org.codecyprus.android_client.ui;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,21 +56,34 @@ public class TreasureHuntsAdapter extends ArrayAdapter<TreasureHunt>
 
     public TreasureHuntsAdapter(final Context context, final Vector<TreasureHunt> treasureHunts)
     {
-        super(context, R.layout.list_item_category, treasureHunts);
+        super(context, R.layout.list_item_treasure_hunt, treasureHunts);
 
         this.layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    @Override public View getView(final int position, final View convertView, final ViewGroup parent)
+    @NonNull
+    @Override
+    public View getView(final int position, final View convertView, @NonNull final ViewGroup parent)
     {
-        final View view = layoutInflater.inflate(R.layout.list_item_category, null); // todo
+        // Creates a ViewHolder and store references to the two children views we want to bind data to.
+        View view = convertView;
+        if(convertView == null) {
+            view = layoutInflater.inflate(R.layout.list_item_treasure_hunt, parent, false);
+        }
+        assert view != null;
 
         final TreasureHunt treasureHunt = getItem(position);
+        assert treasureHunt != null;
         final SerializableSession serializableSession = Preferences.getSession(getContext(), treasureHunt.getUuid());
 
-        // Creates a ViewHolder and store references to the two children views we want to bind data to.
-        assert view != null;
-        view.findViewById(R.id.list_item_category_active).setVisibility(serializableSession == null ? View.GONE : View.VISIBLE);
+        final TextView activeLabelTextView = view.findViewById(R.id.list_item_category_active);
+        if(serializableSession == null) {
+            activeLabelTextView.setVisibility(View.GONE);
+        } else {
+            final String team = serializableSession.getTeamName();
+            activeLabelTextView.setText(getContext().getString(R.string.ACTIVE_SESSION_with_team_name, team));
+            activeLabelTextView.setVisibility(View.VISIBLE);
+        }
         final TextView treasureHuntName = view.findViewById(R.id.list_item_category_name);
         final TextView treasureHuntValidDateAndTime = view.findViewById(R.id.list_item_category_valid_date_and_time);
 

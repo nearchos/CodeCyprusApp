@@ -6,5 +6,5 @@ public enum QuestionType {
     MCQ, // A, B, C, D
     INTEGER, // any int
     NUMERIC, // any float
-    TEXT; // any text
+    TEXT // any text
 }

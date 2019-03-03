@@ -27,6 +27,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Set;
 
@@ -147,7 +148,7 @@ public class SyncService extends IntentService
         final InputStream inputStream = httpURLConnection.getInputStream();
 
         // handle httpResponse
-        final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "utf-8"), 8);
+        final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8), 8);
         final StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(bufferedReader.readLine()).append("\n");
         String line;

@@ -19,8 +19,6 @@
 
 package org.codecyprus.android_client.ui;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -29,6 +27,8 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -49,15 +49,15 @@ import java.util.Vector;
  * @author Nearchos Paspallis
  * 31/12/13 / 08:53.
  */
-public class ActivityLeaderBoard extends Activity
+public class ActivityLeaderBoard extends AppCompatActivity
 {
     public static final String TAG = "codecyprus";
 
     private final IntentFilter intentFilter = new IntentFilter(SyncService.ACTION_LEADER_BOARD_COMPLETED);
     private ProgressReceiver progressReceiver;
 
+    private Button claimPrizeButton;
     private TextView leaderBoardName;
-    private Button leaderboardPrize;
     private ListView listView;
 
     private ConnectivityManager connectivityManager = null;
@@ -72,11 +72,11 @@ public class ActivityLeaderBoard extends Activity
 
         connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
+        claimPrizeButton = findViewById(R.id.activity_leader_board_prize);
         leaderBoardName = findViewById(R.id.activity_leader_board_name);
-        leaderboardPrize = findViewById(R.id.activity_leader_board_prize);
         listView = findViewById(R.id.activity_score_board_list_view);
 
-        final ActionBar actionBar = getActionBar();
+        final ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
 
         progressReceiver = new ProgressReceiver();
@@ -164,6 +164,7 @@ public class ActivityLeaderBoard extends Activity
                     // update the UI
                     leaderBoardName.setText(leaderboardReply.getTreasureHuntName());
                     listView.setAdapter(new LeaderboardEntriesAdapter(context, leaderboardEntries));
+                    claimPrizeButton.setVisibility(leaderboardReply.isHasPrize() ? View.VISIBLE : View.GONE);
                 } else {
                     final Replies.ErrorReply errorReply = gson.fromJson(payload, Replies.ErrorReply.class);
                     new DialogError(context, errorReply.getErrorMessages()).show();

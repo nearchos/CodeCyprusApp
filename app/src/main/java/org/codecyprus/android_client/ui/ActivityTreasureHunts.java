@@ -19,8 +19,6 @@
 
 package org.codecyprus.android_client.ui;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -29,6 +27,8 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -51,7 +51,7 @@ import java.util.Vector;
  * @author Nearchos Paspallis
  * Created on 19/12/13.
  */
-public class ActivityTreasureHunts extends Activity
+public class ActivityTreasureHunts extends AppCompatActivity
 {
     public static final String TAG = "codecyprus";
 
@@ -88,7 +88,7 @@ public class ActivityTreasureHunts extends Activity
             }
         });
 
-        final ActionBar actionBar = getActionBar();
+        final ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
 
         progressReceiver = new ProgressReceiver();

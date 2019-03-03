@@ -20,8 +20,6 @@
 package org.codecyprus.android_client.ui;
 
 import android.Manifest;
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.*;
 import android.content.pm.PackageManager;
@@ -36,6 +34,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
@@ -68,7 +68,7 @@ import java.util.*;
  * @author Nearchos Paspallis
  * 27/12/13 / 15:59.
  */
-public class ActivityQuestion extends Activity {
+public class ActivityQuestion extends AppCompatActivity {
     public static final String TAG = "codecyprus";
 
     private static final IntentFilter intentFilter = new IntentFilter();
@@ -81,8 +81,6 @@ public class ActivityQuestion extends Activity {
     }
 
     private ProgressReceiver progressReceiver;
-
-    private ActionBar actionBar;
 
     private Button buttonA;
     private Button buttonB;
@@ -121,7 +119,8 @@ public class ActivityQuestion extends Activity {
 
         connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        actionBar = getActionBar();
+        final ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
 
         inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
@@ -176,7 +175,7 @@ public class ActivityQuestion extends Activity {
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
 
         menu.add(R.string.Scan)
-                .setIcon(R.drawable.ic_qrcode_black_48dp)
+                .setIcon(R.drawable.ic_qrcode_white_48dp)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
         menu.add(R.string.Score_board)
@@ -307,8 +306,6 @@ public class ActivityQuestion extends Activity {
     protected void onResume() {
         super.onResume();
         registerReceiver(progressReceiver, intentFilter);
-
-        if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
 
         mcqButtonsContainer.setVisibility(View.GONE);
         booleanButtonsContainer.setVisibility(View.GONE);
@@ -501,7 +498,8 @@ public class ActivityQuestion extends Activity {
                         final Replies.ScoreReply scoreReply = gson.fromJson(payload, Replies.ScoreReply.class);
                         final long score = scoreReply.getScore(); // JsonParser.parseScore(payload);
 //                        scoreTextView.setText(getString(R.string.Score_is, score));
-                        setTitle(getString(R.string.Score, score));
+                        final String teamName = scoreReply.getPlayer();
+                        setTitle(getString(R.string.Score_and_Team, score, teamName));
                     } else if(SyncService.ACTION_UPDATE_LOCATION_COMPLETED.equals(intent.getAction())) {
                         // no need to do anything really, except show an error if any
                         final Replies.LocationReply locationReply = gson.fromJson(payload, Replies.LocationReply.class);
